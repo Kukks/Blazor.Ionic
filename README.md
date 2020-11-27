@@ -1,6 +1,6 @@
-#Blazor.Ionic
+# Blazor.Ionic
 
-##Installation
+## Installation
 
 * Add Ionic to your solution. 
   * You can use the [CDN packages](https://ionicframework.com/docs/intro/cdn)
@@ -44,7 +44,7 @@
 `<script src="_content/Blazor.Ionic/ionic-bridge.js"></script>`
 * In your `Imports.razor`, add the following `@using Blazor.Ionic`
 
-##Usage
+## Usage
 You should be able to make use most of the original components from Ionic [documented here](https://ionicframework.com/docs/components). 
 
 If you use `ion-item` with a `href` attribute, you will need additional syntax due to some limitations.
