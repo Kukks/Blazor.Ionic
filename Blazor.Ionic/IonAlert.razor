@@ -1,0 +1,94 @@
+@using Hara.UI.Shared.Ionic.Models
+@using System.Text.Json.Serialization
+@using System.Text.Json
+@inherits BaseIonicPresentableComponent<object, Hara.UI.Shared.Ionic.Models.OverlayEventDetail<Hara.UI.Shared.Ionic.Models.IonicComponentDismissPayloadData>>
+
+@code {
+
+    [Parameter(CaptureUnmatchedValues = true)]
+    public Dictionary<string, object> InputAttributes { get; set; }
+
+    [Parameter]
+    public IEnumerable<IonAlertButton> Buttons { get; set; }
+
+    [Parameter]
+    public IEnumerable<IonAlertInput> Inputs { get; set; }
+
+    protected override async Task CreateElement()
+    {
+        var data = new Dictionary<string, object>();
+        if (Buttons?.Any() is true)
+        {
+            data.Add("buttons", Buttons);
+        }
+        if (Inputs?.Any() is true)
+        {
+            data.Add("inputs", Inputs);
+        }
+        await JsRuntime.InvokeVoidAsync("createElement", "ion-alert", Id, InputAttributes, data);
+        if (Buttons?.Any() is true)
+        {
+            for (int i = 0; i < Buttons.Count(); i++)
+            {
+                if (Buttons.ElementAt(i).Handler != null)
+                {
+                    await JsRuntime.InvokeVoidAsync("setWebComponentPropertyWithCallback", Id, $"buttons[{i}].handler", ThisRef, nameof(HandleButton), i);
+                }
+            }
+        }
+        if (Inputs?.Any() is true)
+        {
+            for (int i = 0; i < Inputs.Count(); i++)
+            {
+                if (Inputs.ElementAt(i).Handler != null)
+                {
+                    await JsRuntime.InvokeVoidAsync("setWebComponentPropertyWithCallback", Id, $"inputs[{i}].handler", ThisRef, nameof(HandleInput), i);
+                }
+            }
+        }
+        await JsRuntime.InvokeVoidAsync("registerBlazorCustomHandler", Id, "ionAlertDidDismiss", ThisRef, nameof(HandleDismissed));
+        await JsRuntime.InvokeVoidAsync("registerBlazorCustomHandler", Id, "ionAlertDidPresent", ThisRef, nameof(HandlePresented));
+    }
+
+    [JSInvokable(nameof(HandleButton))]
+    public Task HandleButton(IonAlertButtonHandlerData data, int id)
+    {
+        if (data?.Options?.ContainsKey("0") is true)
+        {
+            data = JsonSerializer.Deserialize<IonAlertButtonHandlerData>(((JsonElement) data.Options["0"]).GetRawText());
+        }
+        return Buttons.ElementAt(id).Handler(data);
+    }
+
+    [JSInvokable(nameof(HandleInput))]
+    public Task HandleInput(IonAlertInput data, int id)
+    {
+        return Inputs.ElementAt(id).Handler(data);
+    }
+
+
+    public class IonAlertButtonHandlerData
+    {
+        [JsonExtensionData]
+        public Dictionary<string, object> Options { get; set; } = new Dictionary<string, object>();
+    }
+
+    public class IonAlertButton
+    {
+        [JsonExtensionData]
+        public Dictionary<string, object> Options { get; set; }
+
+        [JsonIgnore]
+        public Func<IonAlertButtonHandlerData, Task> Handler { get; set; }
+    }
+
+    public class IonAlertInput
+    {
+        [JsonExtensionData]
+        public Dictionary<string, object> Options { get; set; }
+
+        [JsonIgnore]
+        public Func<object, Task> Handler { get; set; }
+    }
+
+}
