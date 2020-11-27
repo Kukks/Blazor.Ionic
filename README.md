@@ -38,6 +38,8 @@
           };
   </script>
   ```
+* Add Blazor.Ionic to your project 
+`Install-Package BlazorIonic`
 * Add Blazor.Ionic's javascript to your index.cshtml
 `<script src="_content/Blazor.Ionic/ionic-bridge.js"></script>`
 * In your `Imports.razor`, add the following `@using Blazor.Ionic`
