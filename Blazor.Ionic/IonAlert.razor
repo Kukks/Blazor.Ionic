@@ -1,7 +1,7 @@
-@using Hara.UI.Shared.Ionic.Models
 @using System.Text.Json.Serialization
 @using System.Text.Json
-@inherits BaseIonicPresentableComponent<object, Hara.UI.Shared.Ionic.Models.OverlayEventDetail<Hara.UI.Shared.Ionic.Models.IonicComponentDismissPayloadData>>
+@using Microsoft.JSInterop
+@inherits BaseIonicPresentableComponent<object, Blazor.Ionic.Models.OverlayEventDetail<Blazor.Ionic.Models.IonicComponentDismissPayloadData>>
 
 @code {
 
@@ -25,14 +25,14 @@
         {
             data.Add("inputs", Inputs);
         }
-        await JsRuntime.InvokeVoidAsync("createElement", "ion-alert", Id, InputAttributes, data);
+        await JsRuntime.InvokeVoidAsync("IonicBridge.createElement", "ion-alert", Id, InputAttributes, data);
         if (Buttons?.Any() is true)
         {
             for (int i = 0; i < Buttons.Count(); i++)
             {
                 if (Buttons.ElementAt(i).Handler != null)
                 {
-                    await JsRuntime.InvokeVoidAsync("setWebComponentPropertyWithCallback", Id, $"buttons[{i}].handler", ThisRef, nameof(HandleButton), i);
+                    await JsRuntime.InvokeVoidAsync("IonicBridge.setWebComponentPropertyWithCallback", Id, $"buttons[{i}].handler", ThisRef, nameof(HandleButton), i);
                 }
             }
         }
@@ -42,12 +42,12 @@
             {
                 if (Inputs.ElementAt(i).Handler != null)
                 {
-                    await JsRuntime.InvokeVoidAsync("setWebComponentPropertyWithCallback", Id, $"inputs[{i}].handler", ThisRef, nameof(HandleInput), i);
+                    await JsRuntime.InvokeVoidAsync("IonicBridge.setWebComponentPropertyWithCallback", Id, $"inputs[{i}].handler", ThisRef, nameof(HandleInput), i);
                 }
             }
         }
-        await JsRuntime.InvokeVoidAsync("registerBlazorCustomHandler", Id, "ionAlertDidDismiss", ThisRef, nameof(HandleDismissed));
-        await JsRuntime.InvokeVoidAsync("registerBlazorCustomHandler", Id, "ionAlertDidPresent", ThisRef, nameof(HandlePresented));
+        await JsRuntime.InvokeVoidAsync("IonicBridge.registerBlazorCustomHandler", Id, "ionAlertDidDismiss", ThisRef, nameof(HandleDismissed));
+        await JsRuntime.InvokeVoidAsync("IonicBridge.registerBlazorCustomHandler", Id, "ionAlertDidPresent", ThisRef, nameof(HandlePresented));
     }
 
     [JSInvokable(nameof(HandleButton))]

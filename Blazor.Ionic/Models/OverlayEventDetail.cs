@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace Hara.UI.Shared.Ionic.Models
+namespace Blazor.Ionic.Models
 {
     public class OverlayEventDetail<T> where T: IonicComponentDismissPayloadData
     {

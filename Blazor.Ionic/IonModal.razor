@@ -1,5 +1,5 @@
-@using Hara.UI.Shared.Ionic.Models
-@inherits BaseIonicPresentableComponent<object, Hara.UI.Shared.Ionic.Models.OverlayEventDetail<Hara.UI.Shared.Ionic.Models.IonicComponentDismissPayloadData>>
+@using Microsoft.JSInterop
+@inherits BaseIonicPresentableComponent<object, Blazor.Ionic.Models.OverlayEventDetail<Blazor.Ionic.Models.IonicComponentDismissPayloadData>>
 <div style="display: none" @ref="modalContainer">
     <div @ref="modalContent">@ChildContent</div>
 </div>
@@ -17,13 +17,13 @@
 
     protected override async Task CreateElement()
     {
-        await JsRuntime.InvokeVoidAsync("removeremove", modalContent, modalContainer);
+        await JsRuntime.InvokeVoidAsync("IonicBridge.removeremove", modalContent, modalContainer);
         var data = new Dictionary<string, object>()
         {
             {"component", modalContent}
         };
-        await JsRuntime.InvokeVoidAsync("createElement", "ion-modal", Id, InputAttributes, data);
-        await JsRuntime.InvokeVoidAsync("registerBlazorCustomHandler", Id, "ionModalDidDismiss", ThisRef, nameof(HandleDismissed));
-        await JsRuntime.InvokeVoidAsync("registerBlazorCustomHandler", Id, "ionModalDidPresent", ThisRef, nameof(HandlePresented));
+        await JsRuntime.InvokeVoidAsync("IonicBridge.createElement", "ion-modal", Id, InputAttributes, data);
+        await JsRuntime.InvokeVoidAsync("IonicBridge.registerBlazorCustomHandler", Id, "ionModalDidDismiss", ThisRef, nameof(HandleDismissed));
+        await JsRuntime.InvokeVoidAsync("IonicBridge.registerBlazorCustomHandler", Id, "ionModalDidPresent", ThisRef, nameof(HandlePresented));
     }
 }

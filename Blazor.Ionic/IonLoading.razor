@@ -1,5 +1,5 @@
-@using Hara.UI.Shared.Ionic.Models
-@inherits BaseIonicPresentableComponent<object, Hara.UI.Shared.Ionic.Models.OverlayEventDetail<Hara.UI.Shared.Ionic.Models.IonicComponentDismissPayloadData>>
+@using Microsoft.JSInterop
+@inherits BaseIonicPresentableComponent<object, Blazor.Ionic.Models.OverlayEventDetail<Blazor.Ionic.Models.IonicComponentDismissPayloadData>>
 
 @code {
     [Parameter(CaptureUnmatchedValues = true)]
@@ -7,8 +7,8 @@
 
     protected override async Task CreateElement()
     {
-        await JsRuntime.InvokeVoidAsync("createElement", "ion-loading", Id, InputAttributes);
-        await JsRuntime.InvokeVoidAsync("registerBlazorCustomHandler", Id, "ionLoadingDidDismiss", ThisRef, nameof(HandleDismissed));
-        await JsRuntime.InvokeVoidAsync("registerBlazorCustomHandler", Id, "ionLoadingDidPresent", ThisRef, nameof(HandlePresented));
+        await JsRuntime.InvokeVoidAsync("IonicBridge.createElement", "ion-loading", Id, InputAttributes);
+        await JsRuntime.InvokeVoidAsync("IonicBridge.registerBlazorCustomHandler", Id, "ionLoadingDidDismiss", ThisRef, nameof(HandleDismissed));
+        await JsRuntime.InvokeVoidAsync("IonicBridge.registerBlazorCustomHandler", Id, "ionLoadingDidPresent", ThisRef, nameof(HandlePresented));
     }
 }

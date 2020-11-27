@@ -1,6 +1,6 @@
-@using Hara.UI.Shared.Ionic.Models
 @using System.Text.Json.Serialization
-@inherits BaseIonicPresentableComponent<object, Hara.UI.Shared.Ionic.Models.OverlayEventDetail<Hara.UI.Shared.Ionic.Models.IonicComponentDismissPayloadData>>
+@using Microsoft.JSInterop
+@inherits BaseIonicPresentableComponent<object, Blazor.Ionic.Models.OverlayEventDetail<Blazor.Ionic.Models.IonicComponentDismissPayloadData>>
 
 @code {
 
@@ -17,19 +17,19 @@
         {
             data.Add("buttons", Buttons);
         }
-        await JsRuntime.InvokeVoidAsync("createElement", "ion-action-sheet", Id, InputAttributes, data);
+        await JsRuntime.InvokeVoidAsync("IonicBridge.createElement", "ion-action-sheet", Id, InputAttributes, data);
         if (Buttons?.Any() is true)
         {
             for (int i = 0; i < Buttons.Count(); i++)
             {
                 if (Buttons.ElementAt(i).Handler != null)
                 {
-                    await JsRuntime.InvokeVoidAsync("setWebComponentPropertyWithCallback", Id, $"buttons[{i}].handler", ThisRef, nameof(HandleButton), i);
+                    await JsRuntime.InvokeVoidAsync("IonicBridge.setWebComponentPropertyWithCallback", Id, $"buttons[{i}].handler", ThisRef, nameof(HandleButton), i);
                 }
             }
         }
-        await JsRuntime.InvokeVoidAsync("registerBlazorCustomHandler", Id, "ionActionSheetDidDismiss", ThisRef, nameof(HandleDismissed));
-        await JsRuntime.InvokeVoidAsync("registerBlazorCustomHandler", Id, "ionActionSheetDidPresent", ThisRef, nameof(HandlePresented));
+        await JsRuntime.InvokeVoidAsync("IonicBridge.registerBlazorCustomHandler", Id, "ionActionSheetDidDismiss", ThisRef, nameof(HandleDismissed));
+        await JsRuntime.InvokeVoidAsync("IonicBridge.registerBlazorCustomHandler", Id, "ionActionSheetDidPresent", ThisRef, nameof(HandlePresented));
     }
 
     [JSInvokable(nameof(HandleButton))]

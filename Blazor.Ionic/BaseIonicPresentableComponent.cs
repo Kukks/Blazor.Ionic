@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 
-namespace Hara.UI.Shared.Ionic
+namespace Blazor.Ionic
 {
     public abstract class BaseIonicPresentableComponent<TPresentedData, TDismissedData> : ComponentBase
     {
@@ -27,7 +27,7 @@ namespace Hara.UI.Shared.Ionic
 
                     _renderActions.Enqueue(async () =>
                     {
-                        await JsRuntime.InvokeVoidAsync("executeFunctionByName", Id, value ? "present" : "dismiss");
+                        await JsRuntime.InvokeVoidAsync("IonicBridge.executeFunctionByName", Id, value ? "present" : "dismiss");
                     });
                 }
 
