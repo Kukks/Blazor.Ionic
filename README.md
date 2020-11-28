@@ -8,9 +8,9 @@
   * You can use the [CDN packages](https://ionicframework.com/docs/intro/cdn)
   * or by grabbing the ionic NPM Package `@ionic/core` and copying the contents of `@ionic\core\dist` and `@ionic\core\css\ionic.bundle.css` to `wwwroot.ionic`. Reference them in your index.html like this:
   ```
-    <script type="module" src="_content/Hara.UI//ionic/ionic.esm.js"></script>
-    <script nomodule src="_content/Hara.UI/ionic/ionic.js"></script>
-    <link rel="stylesheet" href="_content/Hara.UI/ionic/ionic.bundle.css"/>
+    <script type="module" src="ionic/ionic.esm.js"></script>
+    <script nomodule src="ionic/ionic.js"></script>
+    <link rel="stylesheet" href="ionic/ionic.bundle.css"/>
   ``` 
   * If you are using Ionic on Xamarin Mobile Blazor Bindings, the SVGS will not load unless you include the following javascript
   ```
