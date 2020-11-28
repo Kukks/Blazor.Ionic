@@ -26,8 +26,8 @@ jobs:
       - name: Update index.html
         uses: jacobtomlinson/gha-find-replace@master
         with:
-          find: "<base href=""/"" />"
-          replace: "<base href=""/Blazor.Ionic/"" />"
+          find: <base href="/" />
+          replace: <base href="/Blazor.Ionic/"/>
             - 
       # Publish the website
       - name: GitHub Pages action
