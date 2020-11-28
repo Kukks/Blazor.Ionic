@@ -1,0 +1,23 @@
+﻿@page "/counter"
+<ion-content class="ion-padding">
+    <p>Current count: @currentCount</p>
+
+    <ion-button @onclick="IncrementCount" expand="block">Increase Counter</ion-button>
+</ion-content>
+@inject UIStateService UIStateService
+
+@code {
+    private int currentCount = 0;
+
+    private void IncrementCount()
+    {
+        currentCount++;
+    }
+
+    protected override void OnInitialized()
+    {
+        UIStateService.Title = "Counter";
+        base.OnInitialized();
+    }
+
+}

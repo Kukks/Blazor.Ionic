@@ -3,6 +3,15 @@
     <PropertyGroup>
         <TargetFramework>netstandard2.0</TargetFramework>
         <RazorLangVersion>3.0</RazorLangVersion>
+        <Title>Ionic5 for Blazor</Title>
+        <Authors>Andrew Camilleri / Kukks</Authors>
+        <Copyright>MIT</Copyright>
+        <RepositoryUrl>https://github.com/Kukks/Blazor.Ionic</RepositoryUrl>
+        <PackageTags>Blazor Ionic </PackageTags>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <PackageId>BlazorIonic</PackageId>
+        <Description>Integration of Ionic5 into Blazor
+</Description>
     </PropertyGroup>
 
 
