@@ -40,5 +40,10 @@ jobs:
           allow_empty_commit: false
           keep_files: false
           force_orphan: true
-          # TODO uncomment the following line if you have a custom domain name
-          # cname: demo.meziantou.net
+      - name: Publish NuGet
+        uses: brandedoutcast/publish-nuget@v2.5.5
+        with:
+          PROJECT_FILE_PATH: Blazor.Ionic/Blazor.Ionic.csproj
+          NUGET_KEY: ${{secrets.NUGET_API_KEY}}
+          PACKAGE_NAME: BlazorIonic
+          INCLUDE_SYMBOLS: true

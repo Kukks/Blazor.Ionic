@@ -14,7 +14,7 @@
 </Description>
         <PackageProjectUrl>https://github.com/Kukks/Blazor.Ionic</PackageProjectUrl>
         <PackageLicenseUrl>https://raw.githubusercontent.com/Kukks/Blazor.Ionic/master/LICENSE</PackageLicenseUrl>
-        <PackageVersion>1.0.1</PackageVersion>
+        <PackageVersion>1.0.2</PackageVersion>
     </PropertyGroup>
 
 
