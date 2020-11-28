@@ -3,6 +3,10 @@
 
 <ion-content class="ion-padding">
     <section>
+        <IonInput @bind-Value="@InputTest"></IonInput>
+        value is @InputTest
+    </section>
+    <section>
         <ion-button @onclick="ToggleLoader" expand="block">Toggle loader (currently @VisibleLoader)</ion-button>
         <ion-button @onclick="ToggleAlert" expand="block">Toggle alert (currently @VisibleAlert)</ion-button>
         <ion-button @onclick="ToggleModal" expand="block">Toggle modal (currently @VisibleModal)</ion-button>
@@ -193,5 +197,7 @@
     {
         VisibleActionSheet = !VisibleActionSheet;
     }
+
+    public object InputTest { get; set; }
 
 }

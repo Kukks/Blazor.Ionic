@@ -1,0 +1,65 @@
+@using Microsoft.JSInterop
+@using System.Text.Json.Serialization
+@inject IJSRuntime JsRuntime
+
+
+<ion-input value="@Value" @attributes="InputAttributes" @ref="_element"></ion-input>
+
+@code {
+    private object _value;
+
+    [Parameter]
+    public object Value
+    {
+        get => _value;
+        set
+        {
+            if (_value == value) return;
+            _value = value;
+            ValueChanged.InvokeAsync(value);
+        }
+    }
+
+    [Parameter(CaptureUnmatchedValues = true)]
+    public Dictionary<string, object> InputAttributes { get; set; }
+
+    ElementReference _element { get; set; }
+    DotNetObjectReference<IonInput> ThisRef { get; set; }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            ThisRef = DotNetObjectReference.Create(this);
+            await JsRuntime.InvokeVoidAsync("IonicBridge.registerBlazorCustomHandler", _element, "ionInput", ThisRef, nameof(HandleInput));
+            await JsRuntime.InvokeVoidAsync("IonicBridge.registerBlazorCustomHandler", _element, "ionChange", ThisRef, nameof(HandleChange));
+        }
+        await base.OnAfterRenderAsync(firstRender);
+    }
+
+
+    [JSInvokable(nameof(HandleInput))]
+    public async Task HandleInput(KeyboardEventArgs data)
+    {
+        await OnInput.InvokeAsync(data);
+    }
+
+    [JSInvokable(nameof(HandleChange))]
+    public async Task HandleChange(InputChangeEventDetail data)
+    {
+        Value = data.Value;
+    }
+
+    [Parameter]
+    public EventCallback<object> ValueChanged { get; set; }
+
+    [Parameter]
+    public EventCallback<KeyboardEventArgs> OnInput { get; set; }
+
+    public class InputChangeEventDetail
+    {
+        [JsonPropertyName("value")]
+        public object Value { get; set; }
+    }
+
+}

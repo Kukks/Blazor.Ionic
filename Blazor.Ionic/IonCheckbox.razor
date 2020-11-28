@@ -1,0 +1,57 @@
+@using Microsoft.JSInterop
+@using System.Text.Json.Serialization
+@inject IJSRuntime JsRuntime
+
+
+<ion-checkbox value="@Value" @attributes="InputAttributes" @ref="_element"></ion-checkbox>
+
+@code {
+    private bool _value;
+
+    [Parameter]
+    public bool Value
+    {
+        get => _value;
+        set
+        {
+            if (_value == value) return;
+            _value = value;
+            ValueChanged.InvokeAsync(value);
+        }
+    }
+
+    [Parameter(CaptureUnmatchedValues = true)]
+    public Dictionary<string, object> InputAttributes { get; set; }
+
+    ElementReference _element { get; set; }
+    DotNetObjectReference<IonCheckbox> ThisRef { get; set; }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            ThisRef = DotNetObjectReference.Create(this);
+            await JsRuntime.InvokeVoidAsync("IonicBridge.registerBlazorCustomHandler", _element, "ionChange", ThisRef, nameof(HandleChange));
+        }
+        await base.OnAfterRenderAsync(firstRender);
+    }
+
+    [JSInvokable(nameof(HandleChange))]
+    public async Task HandleChange(CheckboxChangeEventDetail data)
+    {
+        Value = data.Checked;
+    }
+
+    [Parameter]
+    public EventCallback<bool> ValueChanged { get; set; }
+
+    [Parameter]
+    public EventCallback<KeyboardEventArgs> OnInput { get; set; }
+
+    public class CheckboxChangeEventDetail : IonInput.InputChangeEventDetail
+    {
+        [JsonPropertyName("checked")]
+        public bool Checked { get; set; }
+    }
+
+}

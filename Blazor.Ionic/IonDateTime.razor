@@ -1,0 +1,57 @@
+@using Microsoft.JSInterop
+@using System.Text.Json.Serialization
+@inject IJSRuntime JsRuntime
+
+
+<ion-datetime value="@Value" @attributes="InputAttributes" @ref="_element"></ion-datetime>
+
+@code {
+    private string _value;
+
+    [Parameter]
+    public string Value
+    {
+        get => _value;
+        set
+        {
+            if (_value == value) return;
+            _value = value;
+            ValueChanged.InvokeAsync(value);
+        }
+    }
+
+    [Parameter(CaptureUnmatchedValues = true)]
+    public Dictionary<string, object> InputAttributes { get; set; }
+
+    ElementReference _element { get; set; }
+    DotNetObjectReference<IonDateTime> ThisRef { get; set; }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            ThisRef = DotNetObjectReference.Create(this);
+            await JsRuntime.InvokeVoidAsync("IonicBridge.registerBlazorCustomHandler", _element, "ionChange", ThisRef, nameof(HandleChange));
+        }
+        await base.OnAfterRenderAsync(firstRender);
+    }
+    
+    [JSInvokable(nameof(HandleChange))]
+    public async Task HandleChange(InputChangeEventDetail data)
+    {
+        Value = data.Value;
+    }
+
+    [Parameter]
+    public EventCallback<string> ValueChanged { get; set; }
+
+    [Parameter]
+    public EventCallback<KeyboardEventArgs> OnInput { get; set; }
+
+    public class InputChangeEventDetail
+    {
+        [JsonPropertyName("value")]
+        public string Value { get; set; }
+    }
+
+}
