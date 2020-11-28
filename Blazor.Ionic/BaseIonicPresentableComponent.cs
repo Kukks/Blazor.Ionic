@@ -61,14 +61,16 @@ namespace Blazor.Ionic
         {
             _realVisible = false;
             await Dismissed.InvokeAsync(data);
-            await VisibleChanged.InvokeAsync(_realVisible);
+            if(_realVisible != _visible)
+                await VisibleChanged.InvokeAsync(_realVisible);
         }
 
         public async Task HandlePresentedCore(TPresentedData data)
         {
             _realVisible = true;
             await Presented.InvokeAsync(data);
-            await VisibleChanged.InvokeAsync(_realVisible);
+            if(_realVisible != _visible)
+                await VisibleChanged.InvokeAsync(_realVisible);
         }
 
         protected abstract Task CreateElement();
