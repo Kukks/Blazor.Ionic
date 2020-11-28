@@ -1,41 +1,44 @@
 ﻿@page "/demo"
 @inject UIStateService UiStateService
 
-<section>
-    <ion-button @onclick="ToggleLoader" expand="block">Toggle loader (currently @VisibleLoader)</ion-button>
-    <ion-button @onclick="ToggleAlert" expand="block">Toggle alert (currently @VisibleAlert)</ion-button>
-    <ion-button @onclick="ToggleModal" expand="block">Toggle modal (currently @VisibleModal)</ion-button>
-    <ion-button @onclick="ToggleActionSheet" expand="block">Toggle action sheet (currently @VisibleActionSheet)</ion-button>
-    <ion-list>
-        @foreach (var log in Logs)
-        {
-            <ion-item>
-                <ion-label>
-                    @log
-                </ion-label>
-            </ion-item>
-        }
-    </ion-list>
-</section>
-<IonModal @bind-Visible="@VisibleModal">
-    <ion-header>
-      <ion-toolbar>
-        <ion-title>Modal Header</ion-title>
-        <ion-buttons slot="primary">
-          <ion-button @onclick="ToggleModal">
-            <ion-icon slot="icon-only" name="close"></ion-icon>
-          </ion-button>
-        </ion-buttons>
-      </ion-toolbar>
-    </ion-header>
-    <ion-content class="ion-padding">
-        Modal Content
-        
-    </ion-content>
-</IonModal>
-<IonLoading @bind-Visible="@VisibleLoader" message="eeee" backdrop-dismiss="true"></IonLoading>
-<IonAlert @bind-Visible="@VisibleAlert" message="eeee" Buttons="buttons" Inputs="inputs" backdrop-dismiss="true"></IonAlert>
-<IonActionSheet t @bind-Visible="@VisibleActionSheet" Buttons="actionSheetButtons" header="An action sheet!"></IonActionSheet>
+<ion-content class="ion-padding">
+    <section>
+        <ion-button @onclick="ToggleLoader" expand="block">Toggle loader (currently @VisibleLoader)</ion-button>
+        <ion-button @onclick="ToggleAlert" expand="block">Toggle alert (currently @VisibleAlert)</ion-button>
+        <ion-button @onclick="ToggleModal" expand="block">Toggle modal (currently @VisibleModal)</ion-button>
+        <ion-button @onclick="ToggleActionSheet" expand="block">Toggle action sheet (currently @VisibleActionSheet)</ion-button>
+        <ion-list>
+            @foreach (var log in Logs)
+            {
+                <ion-item>
+                    <ion-label>
+                        @log
+                    </ion-label>
+                </ion-item>
+            }
+        </ion-list>
+    </section>
+    <IonModal @bind-Visible="@VisibleModal">
+        <ion-header>
+            <ion-toolbar>
+                <ion-title>Modal Header</ion-title>
+                <ion-buttons slot="primary">
+                    <ion-button @onclick="ToggleModal">
+                        <ion-icon slot="icon-only" name="close"></ion-icon>
+                    </ion-button>
+                </ion-buttons>
+            </ion-toolbar>
+        </ion-header>
+        <ion-content class="ion-padding">
+            Modal Content
+
+        </ion-content>
+    </IonModal>
+    <IonLoading @bind-Visible="@VisibleLoader" message="eeee" backdrop-dismiss="true"></IonLoading>
+    <IonAlert @bind-Visible="@VisibleAlert" message="eeee" Buttons="buttons" Inputs="inputs" backdrop-dismiss="true"></IonAlert>
+    <IonActionSheet t @bind-Visible="@VisibleActionSheet" Buttons="actionSheetButtons" header="An action sheet!"></IonActionSheet>
+</ion-content>
+
 @code {
 
     public IonAlert.IonAlertButton[] buttons;
@@ -102,7 +105,7 @@
                 Handler = o =>
                 {
                     var vals = string.Join(",", o.Options.Select(pair => $"{pair.Key}={pair.Value}").ToArray());
-                    Logs.Add($"1st option clicked! {(vals)}" );
+                    Logs.Add($"1st option clicked! {(vals)}");
                     return Task.CompletedTask;
                 }
             },
@@ -116,7 +119,7 @@
                 Handler = o =>
                 {
                     var vals = string.Join(",", o.Options.Select(pair => $"{pair.Key}={pair.Value}").ToArray());
-                    Logs.Add($"cancel clicked! {vals}" );
+                    Logs.Add($"cancel clicked! {vals}");
                     return Task.CompletedTask;
                 }
             }
@@ -134,7 +137,7 @@
                 Handler = o =>
                 {
                     var vals = string.Join(",", o.Options.Select(pair => $"{pair.Key}={pair.Value}").ToArray());
-                    Logs.Add($"1st option clicked! {(vals)}" );
+                    Logs.Add($"1st option clicked! {(vals)}");
                     return Task.CompletedTask;
                 }
             },
@@ -149,7 +152,7 @@
                 Handler = o =>
                 {
                     var vals = string.Join(",", o.Options.Select(pair => $"{pair.Key}={pair.Value}").ToArray());
-                    Logs.Add($"cancel clicked! {vals}" );
+                    Logs.Add($"cancel clicked! {vals}");
                     return Task.CompletedTask;
                 }
             }
