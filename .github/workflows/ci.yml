@@ -47,3 +47,4 @@ jobs:
           NUGET_KEY: ${{secrets.NUGET_API_KEY}}
           PACKAGE_NAME: BlazorIonic
           INCLUDE_SYMBOLS: true
+          VERSION_REGEX: /^\s*<PackageVersion>(.*)<\/PackageVersion>\s*$/m
