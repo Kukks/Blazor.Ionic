@@ -28,7 +28,7 @@ jobs:
         with:
           find: <base href="/" />
           replace: <base href="/Blazor.Ionic/"/>
-            - 
+          include: index.html
       # Publish the website
       - name: GitHub Pages action
         if: ${{ github.ref == 'refs/heads/master' }} # Publish only when the push is on master
