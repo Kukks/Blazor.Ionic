@@ -1,6 +1,6 @@
 # Blazor.Ionic
 
-[See demo here](https://kukks.github.io/Blazor.Ionic/docs/) 
+[See demo here](https://kukks.github.io/Blazor.Ionic) 
 
 ## Installation
 
