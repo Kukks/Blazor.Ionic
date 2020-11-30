@@ -1,57 +1,25 @@
-@using Microsoft.JSInterop
 @using System.Text.Json.Serialization
-@inject IJSRuntime JsRuntime
+@inherits BaseIonicInputComponent<bool, IonCheckbox.InputChangeEventDetail>
 
-
-<ion-checkbox value="@Value" @attributes="InputAttributes" @ref="_element"></ion-checkbox>
+<ion-checkbox checked="@Value" @attributes="InputAttributes" @ref="Element">@ChildContent</ion-checkbox>
 
 @code {
-    private bool _value;
 
     [Parameter]
-    public bool Value
+    public bool Checked
     {
-        get => _value;
-        set
-        {
-            if (_value == value) return;
-            _value = value;
-            ValueChanged.InvokeAsync(value);
-        }
+        get => Value;
+        set => Value = value;
     }
 
-    [Parameter(CaptureUnmatchedValues = true)]
-    public Dictionary<string, object> InputAttributes { get; set; }
-
-    ElementReference _element { get; set; }
-    DotNetObjectReference<IonCheckbox> ThisRef { get; set; }
-
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        if (firstRender)
-        {
-            ThisRef = DotNetObjectReference.Create(this);
-            await JsRuntime.InvokeVoidAsync("IonicBridge.registerBlazorCustomHandler", _element, "ionChange", ThisRef, nameof(HandleChange));
-        }
-        await base.OnAfterRenderAsync(firstRender);
-    }
-
-    [JSInvokable(nameof(HandleChange))]
-    public async Task HandleChange(CheckboxChangeEventDetail data)
-    {
-        Value = data.Checked;
-    }
-
-    [Parameter]
-    public EventCallback<bool> ValueChanged { get; set; }
-
-    [Parameter]
-    public EventCallback<KeyboardEventArgs> OnInput { get; set; }
-
-    public class CheckboxChangeEventDetail : IonInput.InputChangeEventDetail
+    public class InputChangeEventDetail : BaseIonicChangeEventDetail<bool>
     {
         [JsonPropertyName("checked")]
-        public bool Checked { get; set; }
-    }
+        public bool Value { get; set; }
 
+        public override bool GetValue()
+        {
+            return Value;
+        }
+    }
 }

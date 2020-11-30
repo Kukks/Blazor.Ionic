@@ -1,0 +1,33 @@
+@using Microsoft.JSInterop
+@inject IJSRuntime JsRuntime
+@inject NavigationManager NavigationManager
+
+<ion-item
+    @attributes="InputAttributes"
+     @onclick='OnClick' @onclick:preventDefault="@ShouldInterceptHref"
+     @ref="_element">
+    @ChildContent
+</ion-item>
+
+@code {
+
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+
+    [Parameter(CaptureUnmatchedValues = true)]
+    public Dictionary<string, object> InputAttributes { get; set; }
+
+    private bool ShouldInterceptHref => InputAttributes != null && (InputAttributes.ContainsKey("href") && (!InputAttributes.TryGetValue("target", out var target) || target.ToString().ToLowerInvariant().TrimStart('_') == "self"));
+
+    private ElementReference _element;
+
+
+    private void OnClick(MouseEventArgs obj)
+    {
+        if (ShouldInterceptHref)
+        {
+            NavigationManager.NavigateTo(InputAttributes["href"].ToString());
+        }
+    }
+
+}

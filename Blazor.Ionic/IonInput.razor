@@ -1,42 +1,20 @@
 @using Microsoft.JSInterop
 @using System.Text.Json.Serialization
-@inject IJSRuntime JsRuntime
+@typeparam TItem
+@inherits BaseIonicInputComponent<TItem, IonInput<TItem>.InputChangeEventDetail>
 
-
-<ion-input value="@Value" @attributes="InputAttributes" @ref="_element"></ion-input>
+<ion-input value="@Value" @attributes="InputAttributes" @ref=Element>@ChildContent</ion-input>
 
 @code {
-    private object _value;
-
-    [Parameter]
-    public object Value
-    {
-        get => _value;
-        set
-        {
-            if (_value == value) return;
-            _value = value;
-            ValueChanged.InvokeAsync(value);
-        }
-    }
-
-    [Parameter(CaptureUnmatchedValues = true)]
-    public Dictionary<string, object> InputAttributes { get; set; }
-
-    ElementReference _element { get; set; }
-    DotNetObjectReference<IonInput> ThisRef { get; set; }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
+        await base.OnAfterRenderAsync(firstRender);
         if (firstRender)
         {
-            ThisRef = DotNetObjectReference.Create(this);
-            await JsRuntime.InvokeVoidAsync("IonicBridge.registerBlazorCustomHandler", _element, "ionInput", ThisRef, nameof(HandleInput));
-            await JsRuntime.InvokeVoidAsync("IonicBridge.registerBlazorCustomHandler", _element, "ionChange", ThisRef, nameof(HandleChange));
+            await JsRuntime.InvokeVoidAsync("IonicBridge.registerBlazorCustomHandler", Element, "ionInput", ThisRef, nameof(HandleInput));
         }
-        await base.OnAfterRenderAsync(firstRender);
     }
-
 
     [JSInvokable(nameof(HandleInput))]
     public async Task HandleInput(KeyboardEventArgs data)
@@ -44,22 +22,35 @@
         await OnInput.InvokeAsync(data);
     }
 
-    [JSInvokable(nameof(HandleChange))]
-    public async Task HandleChange(InputChangeEventDetail data)
-    {
-        Value = data.Value;
-    }
-
-    [Parameter]
-    public EventCallback<object> ValueChanged { get; set; }
-
     [Parameter]
     public EventCallback<KeyboardEventArgs> OnInput { get; set; }
 
-    public class InputChangeEventDetail
+    public class InputChangeEventDetail : BaseIonicChangeEventDetail<TItem>
     {
         [JsonPropertyName("value")]
-        public object Value { get; set; }
+        public string Value { get; set; }
+
+        public override TItem GetValue()
+        {
+            var type = typeof(TItem);
+            if (type == typeof(string))
+            {
+                return (TItem) (object) Value;
+            }
+            if (string.IsNullOrEmpty(Value))
+            {
+                return default;
+            }
+            try
+            {
+                type = Nullable.GetUnderlyingType(type) ?? type;
+                return (TItem) Convert.ChangeType(Value, type);
+            }
+            catch (FormatException)
+            {
+                return default;
+            }
+        }
     }
 
 }

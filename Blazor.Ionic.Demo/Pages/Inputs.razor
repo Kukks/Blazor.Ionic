@@ -1,0 +1,146 @@
+﻿@page "/inputs"
+@inject UIStateService UiStateService
+<ion-content fullscreen>
+      <ion-list lines="full" class="ion-no-margin">
+        <ion-list-header lines="full">
+          <ion-label>
+            Label Positions
+          </ion-label>
+        </ion-list-header>
+        <IonItem>
+          <ion-label>Default Label @Input1</ion-label>
+          <IonInput placeholder="placeholder" @bind-Value="Input1"></IonInput>
+        </IonItem>
+        <IonItem>
+          <ion-label position="fixed">Fixed Label</ion-label>
+          <IonInput placeholder="placeholder" @bind-Value="Input1"></IonInput>
+        </IonItem>
+        <IonItem>
+          <ion-label position="stacked">Stacked Label</ion-label>
+          <IonInput placeholder="placeholder" @bind-Value="Input1"></IonInput>
+        </IonItem>
+        <IonItem>
+          <ion-label position="floating">Floating Label</ion-label>
+          <IonInput @bind-Value="Input1"></IonInput>
+        </IonItem>
+      </ion-list>
+
+      <ion-list lines="full" class="ion-no-margin">
+          <ion-list-header lines="full">
+              <ion-label>
+                  Input Types
+              </ion-label>
+          </ion-list-header>
+
+          <IonItem>
+              <ion-label>Text Input</ion-label>
+              <IonInput placeholder="placeholder" type="text" @bind-Value="Input1"></IonInput>
+          </IonItem>
+
+          <IonItem>
+              <ion-label>Number Input @Input2</ion-label>
+              <IonInput placeholder="placeholder" type="number" @bind-Value="Input2" ></IonInput>
+          </IonItem>
+
+          <IonItem>
+              <ion-label>Password Input</ion-label>
+              <IonInput TItem="string" placeholder="placeholder" type="password"></IonInput>
+          </IonItem>
+
+          <IonItem>
+              <ion-label position="stacked">Multiple Inputs</ion-label>
+              <IonInput TItem="string" placeholder="Address Line 1"></IonInput>
+              <IonInput TItem="string" placeholder="Address Line 2"></IonInput>
+              <IonInput TItem="string"  placeholder="City"></IonInput>
+              <IonInput TItem="string" placeholder="State"></IonInput>
+              <IonInput TItem="string" placeholder="Zip Code"></IonInput>
+          </IonItem>
+
+          <IonItem>
+              <ion-label position="stacked">Textarea</ion-label>
+              <IonTextArea placeholder="placeholder"></IonTextArea>
+          </IonItem>
+
+          <IonItem>
+              <ion-label>Date</ion-label>
+              <IonDateTime display-format="h:mm A" picker-format="h:mm A" ></IonDateTime>
+          </IonItem>
+      </ion-list>
+        <ion-list>
+             <ion-list-header lines="full">
+                          <ion-label>
+                              Radio groups
+                          </ion-label>
+                      </ion-list-header>
+              <IonRadioGroup @bind-Value="Input3">
+                <ion-list-header>
+                  <ion-label>Selected: @Input3</ion-label>
+                </ion-list-header>
+
+                <ion-item>
+                  <ion-label>Biff</ion-label>
+                  <ion-radio slot="start" value="biff"></ion-radio>
+                </ion-item>
+
+                <ion-item>
+                  <ion-label>Griff</ion-label>
+                  <ion-radio slot="start" value="griff"></ion-radio>
+                </ion-item>
+
+                <ion-item>
+                  <ion-label>Buford</ion-label>
+                  <ion-radio slot="start" value="buford"></ion-radio>
+                </ion-item>
+              </IonRadioGroup>
+        </ion-list>
+
+<!-- Default Checkbox -->
+<IonCheckbox></IonCheckbox>
+
+<!-- Disabled Checkbox -->
+<IonCheckbox disabled></IonCheckbox>
+
+<!-- Checked Checkbox -->
+<IonCheckbox checked></IonCheckbox>
+
+<!-- Checkbox Colors -->
+<IonCheckbox color="primary"></IonCheckbox>
+<IonCheckbox color="secondary"></IonCheckbox>
+<IonCheckbox color="danger"></IonCheckbox>
+<IonCheckbox color="light"></IonCheckbox>
+<IonCheckbox color="dark"></IonCheckbox>
+
+<!-- Checkboxes in a List -->
+<ion-list>
+  <ion-item>
+    <ion-label>Pepperoni</ion-label>
+    <IonCheckbox slot="end" value="pepperoni" checked></IonCheckbox>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Sausage</ion-label>
+    <IonCheckbox slot="end" value="sausage" disabled></IonCheckbox>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Mushrooms</ion-label>
+    <IonCheckbox slot="end" value="mushrooms"></IonCheckbox>
+  </ion-item>
+</ion-list>
+
+    </ion-content>
+@code {
+
+    public DateTimeOffset EndDate { get; set; } = new DateTimeOffset(2020,12,12,12,12,12, new TimeSpan(0));
+
+    protected override void OnInitialized()
+    {
+        UiStateService.Title = "Inputs";
+        base.OnInitialized();
+    }
+
+    public string Input1 { get; set; }
+    public int? Input2 { get; set; }
+    public string Input3 { get; set; }
+
+}
