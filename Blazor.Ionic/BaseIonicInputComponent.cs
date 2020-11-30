@@ -31,7 +31,7 @@ namespace Blazor.Ionic
 
         [Inject] protected IJSRuntime JsRuntime { get; set; }
         protected DotNetObjectReference<BaseIonicInputComponent<TInputType, TChangeEventDetail>> ThisRef { get; set; }
-        protected  ElementReference Element { get; set; }
+        protected ElementReference Element;
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {

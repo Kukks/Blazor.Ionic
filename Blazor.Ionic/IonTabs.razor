@@ -1,0 +1,73 @@
+@using Microsoft.JSInterop
+@using System.Text.Json.Serialization
+@inject IJSRuntime JsRuntime
+<ion-tabs @attributes="InputAttributes" @ref="Element">@ChildContent</ion-tabs>
+
+@code {
+
+    [Parameter]
+    public string CurrentTab
+    {
+        get => _currentTab;
+        set
+        {
+            if (string.IsNullOrEmpty(value))
+            {
+                return;
+            }
+            if (Equals(_currentTab, value)) return;
+            _currentTab = value;
+            
+            _renderActions.Enqueue(async () =>
+            {
+                await JsRuntime.InvokeVoidAsync("IonicBridge.executeFunctionByName", Element, "select", _currentTab);
+            });
+            CurrentTabChanged.InvokeAsync(value);
+        }
+    }
+
+    [Parameter]
+    public EventCallback<string> CurrentTabChanged { get; set; }
+
+    [Parameter(CaptureUnmatchedValues = true)]
+    public Dictionary<string, object> InputAttributes { get; set; }
+
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+
+    private ElementReference Element;
+
+    private DotNetObjectReference<IonTabs> ThisRef { get; set; }
+
+    private readonly Queue<Func<Task>> _renderActions = new Queue<Func<Task>>();
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            ThisRef = DotNetObjectReference.Create(this);
+            await JsRuntime.InvokeVoidAsync("IonicBridge.registerBlazorCustomHandler", Element, "ionTabsDidChange", ThisRef, nameof(HandleChange));
+        }
+        while (_renderActions.Any())
+        {
+            await _renderActions.Dequeue().Invoke();
+        }
+        await base.OnAfterRenderAsync(firstRender);
+    }
+
+
+    [JSInvokable(nameof(HandleChange))]
+    public virtual Task HandleChange(IonTabsChangeEventData detail)
+    {
+        CurrentTab = detail.Tab;
+        return Task.CompletedTask;
+    }
+
+    public class IonTabsChangeEventData
+
+    {
+        [JsonPropertyName("tab")]
+        public string Tab { get; set; }
+    }
+
+    private string _currentTab;
+}
