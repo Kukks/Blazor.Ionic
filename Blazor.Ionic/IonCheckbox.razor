@@ -1,23 +1,18 @@
 @using System.Text.Json.Serialization
-@inherits BaseIonicInputComponent<bool, IonCheckbox.InputChangeEventDetail>
+@inherits BaseIonicInputComponent<bool?, IonCheckbox.InputChangeEventDetail>
 
-<ion-checkbox checked="@Value" @attributes="InputAttributes" @ref="Element">@ChildContent</ion-checkbox>
+<ion-checkbox checked="@Value" value="@NativeValue"@attributes="InputAttributes" @ref="Element">@ChildContent</ion-checkbox>
 
 @code {
 
     [Parameter]
-    public bool Checked
-    {
-        get => Value;
-        set => Value = value;
-    }
-
-    public class InputChangeEventDetail : BaseIonicChangeEventDetail<bool>
+    public string NativeValue { get; set; }
+    public class InputChangeEventDetail : BaseIonicChangeEventDetail<bool?>
     {
         [JsonPropertyName("checked")]
-        public bool Value { get; set; }
+        public bool? Value { get; set; }
 
-        public override bool GetValue()
+        public override bool? GetValue()
         {
             return Value;
         }

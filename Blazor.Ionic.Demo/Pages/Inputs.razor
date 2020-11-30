@@ -44,7 +44,7 @@
 
           <IonItem>
               <ion-label>Password Input</ion-label>
-              <IonInput TItem="string" placeholder="placeholder" type="password"></IonInput>
+              <IonInput TItem="string" placeholder="placeholder" type="password" @bind-Value="Input1"></IonInput>
           </IonItem>
 
           <IonItem>
@@ -77,57 +77,55 @@
                   <ion-label>Selected: @Input3</ion-label>
                 </ion-list-header>
 
-                <ion-item>
+                <IonItem>
                   <ion-label>Biff</ion-label>
                   <ion-radio slot="start" value="biff"></ion-radio>
-                </ion-item>
+                </IonItem>
 
-                <ion-item>
+                <IonItem>
                   <ion-label>Griff</ion-label>
                   <ion-radio slot="start" value="griff"></ion-radio>
-                </ion-item>
+                </IonItem>
 
-                <ion-item>
+                <IonItem>
                   <ion-label>Buford</ion-label>
                   <ion-radio slot="start" value="buford"></ion-radio>
-                </ion-item>
+                </IonItem>
               </IonRadioGroup>
         </ion-list>
 
-<!-- Default Checkbox -->
-<IonCheckbox></IonCheckbox>
+ <ion-list>
+             <ion-list-header lines="full">
+                          <ion-label>
+                              Checkboxes
+                          </ion-label>
+                      </ion-list-header>
 
-<!-- Disabled Checkbox -->
-<IonCheckbox disabled></IonCheckbox>
-
-<!-- Checked Checkbox -->
-<IonCheckbox checked></IonCheckbox>
-
-<!-- Checkbox Colors -->
-<IonCheckbox color="primary"></IonCheckbox>
-<IonCheckbox color="secondary"></IonCheckbox>
-<IonCheckbox color="danger"></IonCheckbox>
-<IonCheckbox color="light"></IonCheckbox>
-<IonCheckbox color="dark"></IonCheckbox>
-
-<!-- Checkboxes in a List -->
-<ion-list>
-  <ion-item>
-    <ion-label>Pepperoni</ion-label>
-    <IonCheckbox slot="end" value="pepperoni" checked></IonCheckbox>
-  </ion-item>
-
-  <ion-item>
-    <ion-label>Sausage</ion-label>
-    <IonCheckbox slot="end" value="sausage" disabled></IonCheckbox>
-  </ion-item>
-
-  <ion-item>
-    <ion-label>Mushrooms</ion-label>
-    <IonCheckbox slot="end" value="mushrooms"></IonCheckbox>
-  </ion-item>
+<IonItem>
+            <ion-label>Jon Snow</ion-label>
+            <ion-checkbox color="primary" Value="true"slot="start"></ion-checkbox>
+          </IonItem>
+          <IonItem>
+            <ion-checkbox color="dark" Value="true"slot="start"></ion-checkbox>
+            <ion-label>Daenerys Targaryen</ion-label>
+          </IonItem>
+          <IonItem>
+            <ion-checkbox disabled slot="start"></ion-checkbox>
+            <ion-label>Arya Stark</ion-label>
+          </IonItem>
+          <IonItem>
+            <ion-checkbox color="secondary" slot="start"></ion-checkbox>
+            <ion-label>Tyrion Lannister</ion-label>
+          </IonItem>
+          <IonItem>
+            <ion-checkbox color="danger" Value="true"slot="start"></ion-checkbox>
+            <ion-label>Sansa Stark</ion-label>
+          </IonItem>
+          <IonItem>
+            <ion-checkbox color="tertiary" slot="start"></ion-checkbox>
+            <ion-label>Khal Drogo</ion-label>
+          </IonItem>
 </ion-list>
-
     </ion-content>
 @code {
 
