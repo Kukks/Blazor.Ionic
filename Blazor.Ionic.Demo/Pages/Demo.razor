@@ -3,14 +3,11 @@
 
 <ion-content class="ion-padding">
     <section>
-        <IonInput @bind-Value="@InputTest"></IonInput>
-        value is @InputTest
-    </section>
-    <section>
         <ion-button @onclick="ToggleLoader" expand="block">Toggle loader (currently @VisibleLoader)</ion-button>
         <ion-button @onclick="ToggleAlert" expand="block">Toggle alert (currently @VisibleAlert)</ion-button>
         <ion-button @onclick="ToggleModal" expand="block">Toggle modal (currently @VisibleModal)</ion-button>
         <ion-button @onclick="ToggleActionSheet" expand="block">Toggle action sheet (currently @VisibleActionSheet)</ion-button>
+        <ion-button @onclick="TogglePicker" expand="block">Toggle picker (currently @VisiblePicker)</ion-button>
         <ion-list>
             @foreach (var log in Logs)
             {
@@ -41,18 +38,22 @@
     <IonLoading @bind-Visible="@VisibleLoader" message="eeee" backdrop-dismiss="true"></IonLoading>
     <IonAlert @bind-Visible="@VisibleAlert" message="eeee" Buttons="buttons" Inputs="inputs" backdrop-dismiss="true"></IonAlert>
     <IonActionSheet t @bind-Visible="@VisibleActionSheet" Buttons="actionSheetButtons" header="An action sheet!"></IonActionSheet>
+    <IonPicker @bind-Visible="@VisiblePicker" Buttons="pickerButtons" Columns="pickerColumns" ></IonPicker>
 </ion-content>
 
 @code {
 
     public IonAlert.IonAlertButton[] buttons;
     public IonActionSheet.IonActionSheetButton[] actionSheetButtons;
+    public IonPicker.IonPickerButton[] pickerButtons;
+    public IonPicker.IonPickerColumn[] pickerColumns;
     public IonAlert.IonAlertInput[] inputs;
     public List<string> Logs = new List<string>();
     private bool _visibleAlert;
     private bool _visibleActionSheet;
     private bool _visibleModal;
     private bool _visibleLoader;
+    private bool _visiblePicker;
 
     public bool VisibleLoader
     {
@@ -61,6 +62,15 @@
         {
             Logs.Add($"VisibleLoaderChanged {value}");
             _visibleLoader = value;
+        }
+    }
+    public bool VisiblePicker
+    {
+        get => _visiblePicker;
+        set
+        {
+            Logs.Add($"VisiblePickerChanged {value}");
+            _visiblePicker = value;
         }
     }
 
@@ -175,6 +185,98 @@
                 }
             }
         };
+        pickerButtons = new[]
+        {
+            new IonPicker.IonPickerButton()
+            {
+                Options = new Dictionary<string, object>()
+                {
+                    {"text", "a button!"},
+                    {"role", "customrole"}
+                },
+                Handler = o =>
+                {
+                    var vals = string.Join(",", o.Options.Select(pair => $"{pair.Key}={pair.Value}").ToArray());
+                    Logs.Add($"1st option clicked! {(vals)}");
+                    return Task.CompletedTask;
+                }
+            },
+            new IonPicker.IonPickerButton()
+            {
+                Options = new Dictionary<string, object>()
+                {
+                    {"text", "Cancel"},
+                    {"role", "cancel"}
+                },
+                Handler = o =>
+                {
+                    var vals = string.Join(",", o.Options.Select(pair => $"{pair.Key}={pair.Value}").ToArray());
+                    Logs.Add($"cancel clicked! {vals}");
+                    return Task.CompletedTask;
+                }
+            }
+        };
+        pickerColumns = new[]
+        {
+            new IonPicker.IonPickerColumn()
+            {
+                Options = new Dictionary<string, object>()
+                {
+                    {"name", "columntopick"},
+                    {
+                        "options", new[]
+                        {
+                            new
+                            {
+                                text = "option 1",
+                                value = "value1",
+                                selected = false
+                            },
+                            new
+                            {
+                                text = "option 2",
+                                value = "value2",
+                                selected = false
+                            },
+                            new
+                            {
+                                text = "option 3",
+                                value = "value3",
+                                selected = true
+                            }
+                        }
+                    }
+                }
+            },
+            new IonPicker.IonPickerColumn()
+            {
+                Options = new Dictionary<string, object>()
+                {
+                    {"name", "columntopick2"},
+                    {"selectedIndex", 1},
+                    {
+                        "options", new[]
+                        {
+                            new
+                            {
+                                text = "option2 1",
+                                value = "value21"
+                            },
+                            new
+                            {
+                                text = "option2 2",
+                                value = "value22"
+                            },
+                            new
+                            {
+                                text = "option2 3",
+                                value = "value23"
+                            }
+                        }
+                    }
+                }
+            }
+        };
         StateHasChanged();
     }
 
@@ -198,6 +300,9 @@
         VisibleActionSheet = !VisibleActionSheet;
     }
 
-    public object InputTest { get; set; }
+    private void TogglePicker()
+    {
+        VisiblePicker = !VisiblePicker;
+    }
 
 }

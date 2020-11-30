@@ -1,0 +1,75 @@
+@using System.Text.Json.Serialization
+@using Microsoft.JSInterop
+@using System.Text.Json
+@inherits BaseIonicPresentableComponent<object, Blazor.Ionic.Models.OverlayEventDetail<Blazor.Ionic.Models.IonicComponentDismissPayloadData>>
+
+@code {
+
+    [Parameter(CaptureUnmatchedValues = true)]
+    public Dictionary<string, object> InputAttributes { get; set; }
+
+    [Parameter]
+    public IEnumerable<IonPickerButton> Buttons { get; set; }
+
+    [Parameter]
+    public IEnumerable<IonPickerColumn> Columns { get; set; }
+
+    protected override async Task CreateElement()
+    {
+        var data = new Dictionary<string, object>();
+        if (Buttons?.Any() is true)
+        {
+            data.Add("buttons", Buttons);
+        }
+        if (Columns?.Any() is true)
+        {
+            data.Add("columns", Columns);
+        }
+        await JsRuntime.InvokeVoidAsync("IonicBridge.createElement", "ion-picker", Id, InputAttributes, data);
+        if (Buttons?.Any() is true)
+        {
+            for (int i = 0; i < Buttons.Count(); i++)
+            {
+                if (Buttons.ElementAt(i).Handler != null)
+                {
+                    await JsRuntime.InvokeVoidAsync("IonicBridge.setWebComponentPropertyWithCallback", Id, $"buttons[{i}].handler", ThisRef, nameof(HandleButton), i);
+                }
+            }
+        }
+        await JsRuntime.InvokeVoidAsync("IonicBridge.registerBlazorCustomHandler", Id, "ionPickerDidDismiss", ThisRef, nameof(HandleDismissed));
+        await JsRuntime.InvokeVoidAsync("IonicBridge.registerBlazorCustomHandler", Id, "ionPickerDidPresent", ThisRef, nameof(HandlePresented));
+    }
+
+    [JSInvokable(nameof(HandleButton))]
+    public Task HandleButton(IonPickerButtonHandlerData data, int id)
+    {
+        if (data?.Options?.ContainsKey("0") is true)
+        {
+            data = JsonSerializer.Deserialize<IonPickerButtonHandlerData>(((JsonElement) data.Options["0"]).GetRawText());
+        }
+        return Buttons.ElementAt(id).Handler(data);
+    }
+
+
+    public class IonPickerButtonHandlerData
+    {
+        [JsonExtensionData]
+        public Dictionary<string, object> Options { get; set; } = new Dictionary<string, object>();
+    }
+
+    public class IonPickerButton
+    {
+        [JsonExtensionData]
+        public Dictionary<string, object> Options { get; set; } = new Dictionary<string, object>();
+
+        [JsonIgnore]
+        public Func<IonPickerButtonHandlerData, Task> Handler { get; set; }
+    }
+
+    public class IonPickerColumn
+    {
+        [JsonExtensionData]
+        public Dictionary<string, object> Options { get; set; } = new Dictionary<string, object>();
+    }
+
+}
