@@ -1,0 +1,29 @@
+@using Microsoft.JSInterop
+@inherits BaseIonicPresentableComponent<object, Blazor.Ionic.Models.OverlayEventDetail<Blazor.Ionic.Models.IonicComponentDismissPayloadData>>
+<div style="display: none" @ref="popoverContainer">
+    <div @ref="popoverContent">@ChildContent</div>
+</div>
+
+@code {
+
+    [Parameter(CaptureUnmatchedValues = true)]
+    public Dictionary<string, object> InputAttributes { get; set; }
+
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+
+    ElementReference popoverContent;
+    ElementReference popoverContainer;
+
+    protected override async Task CreateElement()
+    {
+        await JsRuntime.InvokeVoidAsync("IonicBridge.removeremove", popoverContent, popoverContainer);
+        var data = new Dictionary<string, object>()
+        {
+            {"component", popoverContent}
+        };
+        await JsRuntime.InvokeVoidAsync("IonicBridge.createElement", "ion-popover", Id, InputAttributes, data);
+        await JsRuntime.InvokeVoidAsync("IonicBridge.registerBlazorCustomHandler", Id, "ionPopoverDidDismiss", ThisRef, nameof(HandleDismissed));
+        await JsRuntime.InvokeVoidAsync("IonicBridge.registerBlazorCustomHandler", Id, "ionPopoverDidPresent", ThisRef, nameof(HandlePresented));
+    }
+}

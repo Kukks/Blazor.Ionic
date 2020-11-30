@@ -9,6 +9,7 @@
         <ion-button @onclick="ToggleActionSheet" expand="block">Toggle action sheet (currently @VisibleActionSheet)</ion-button>
         <ion-button @onclick="TogglePicker" expand="block">Toggle picker (currently @VisiblePicker)</ion-button>
         <ion-button @onclick="ToggleToast" expand="block">Toggle toast (currently @VisibleToast)</ion-button>
+        <ion-button @onclick="TogglePopover" expand="block">Toggle popover (currently @VisiblePopover)</ion-button>
         <ion-list>
             @foreach (var log in Logs)
             {
@@ -36,11 +37,22 @@
 
         </ion-content>
     </IonModal>
+
+    <IonPopover @bind-Visible="@VisiblePopover">
+        <ion-list>
+            <ion-list-header>Ionic</ion-list-header>
+            <IonItem button>Learn Ionic</IonItem>
+            <IonItem button>Documentation </IonItem>
+            <IonItem button>Showcase</IonItem>
+            <IonItem button>GitHub Repo</IonItem>
+            <IonItem lines="none" detail="false" @onclick="TogglePopover" button  >Close</IonItem>
+        </ion-list>
+    </IonPopover>
     <IonLoading @bind-Visible="@VisibleLoader" message="eeee" backdrop-dismiss="true"></IonLoading>
     <IonAlert @bind-Visible="@VisibleAlert" message="eeee" Buttons="buttons" Inputs="inputs" backdrop-dismiss="true"></IonAlert>
     <IonActionSheet t @bind-Visible="@VisibleActionSheet" Buttons="actionSheetButtons" header="An action sheet!"></IonActionSheet>
-    <IonPicker @bind-Visible="@VisiblePicker" Buttons="pickerButtons" Columns="pickerColumns" ></IonPicker>
-    <IonToast @bind-Visible="@VisibleToast" Buttons="toastButtons" ></IonToast>
+    <IonPicker @bind-Visible="@VisiblePicker" Buttons="pickerButtons" Columns="pickerColumns"></IonPicker>
+    <IonToast @bind-Visible="@VisibleToast" Buttons="toastButtons"></IonToast>
 </ion-content>
 
 @code {
@@ -58,6 +70,17 @@
     private bool _visibleLoader;
     private bool _visiblePicker;
     private bool _visibleToast;
+    private bool _visiblePopover;
+
+    public bool VisiblePopover
+    {
+        get => _visiblePopover;
+        set
+        {
+            Logs.Add($"VisiblePopover {value}");
+            _visiblePopover = value;
+        }
+    }
 
     public bool VisibleToast
     {
@@ -68,6 +91,7 @@
             _visibleToast = value;
         }
     }
+
     public bool VisibleLoader
     {
         get => _visibleLoader;
@@ -77,6 +101,7 @@
             _visibleLoader = value;
         }
     }
+
     public bool VisiblePicker
     {
         get => _visiblePicker;
@@ -184,7 +209,7 @@
                 }
             }
         };
-        
+
         toastButtons = new[]
         {
             new IonToast.IonToastButton()
@@ -355,6 +380,11 @@
     private void ToggleToast()
     {
         VisibleToast = !VisibleToast;
+    }
+
+    private void TogglePopover()
+    {
+        VisiblePopover = !VisiblePopover;
     }
 
 }
