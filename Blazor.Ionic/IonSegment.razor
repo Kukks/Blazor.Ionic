@@ -1,0 +1,19 @@
+@using System.Text.Json.Serialization
+@inherits BaseIonicInputComponent<string, IonSegment.InputChangeEventDetail>
+
+<ion-segment value="@Value" @attributes="InputAttributes" @ref="Element">@ChildContent</ion-segment>
+
+@code {
+    
+    public class InputChangeEventDetail : BaseIonicChangeEventDetail<string>
+    {
+        [JsonPropertyName("value")]
+        public string Value { get; set; }
+
+        public override string GetValue()
+        {
+            return Value;
+        }
+    }
+
+}

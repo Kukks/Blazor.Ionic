@@ -89,14 +89,28 @@
                   <ion-label>Griff</ion-label>
                   <ion-radio slot="start" value="griff"></ion-radio>
                 </IonItem>
-
+r
                 <IonItem>
                   <ion-label>Buford</ion-label>
                   <ion-radio slot="start" value="buford"></ion-radio>
                 </IonItem>
               </IonRadioGroup>
         </ion-list>
-
+<ion-list>
+  <ion-list-header lines="full">
+                          <ion-label>
+                              Segments
+                          </ion-label>
+                      </ion-list-header>
+<IonSegment @bind-Value="Input3">
+  <ion-segment-button value="griff">
+    <ion-label>Griff</ion-label>
+  </ion-segment-button>
+  <ion-segment-button value="buford">
+    <ion-label>Buford</ion-label>
+  </ion-segment-button>
+</IonSegment>
+</ion-list>
  <ion-list>
              <ion-list-header lines="full">
                           <ion-label>
