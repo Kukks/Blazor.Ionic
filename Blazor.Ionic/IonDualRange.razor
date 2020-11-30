@@ -1,0 +1,28 @@
+@using System.Text.Json.Serialization
+@inherits BaseIonicInputComponent<IonDualRange.RangeDualValue, IonDualRange.InputChangeEventDetail>
+
+<ion-range dual-knobs="true" value="@Value" @attributes="InputAttributes" @ref="Element">@ChildContent</ion-range>
+
+@code {
+
+    public class InputChangeEventDetail : BaseIonicChangeEventDetail<RangeDualValue>
+    {
+        [JsonPropertyName("value")]
+        public RangeDualValue Value { get; set; }
+
+        public override RangeDualValue GetValue()
+        {
+            return Value;
+        }
+    }
+
+    public class RangeDualValue
+    {
+        [JsonPropertyName("lower")]
+        public int Lower { get; set; }
+
+        [JsonPropertyName("upper")]
+        public int Upper { get; set; }
+    }
+
+}

@@ -196,6 +196,37 @@
           <IonToggle slot="start" name="blackberry" color="dark"  Value="true"></IonToggle>
         </ion-item>
       </ion-list>
+<ion-list>
+  <ion-item>
+    <IonRange color="danger" pin="true"></IonRange>
+  </ion-item>
+
+  <ion-item>
+    <IonRange min="-200" max="200" color="secondary">
+      <ion-label slot="start">-200</ion-label>
+      <ion-label slot="end">200</ion-label>
+    </IonRange>
+  </ion-item>
+
+  <ion-item>
+    <IonRange min="20" max="80" step="2">
+      <ion-icon size="small" slot="start" name="sunny"></ion-icon>
+      <ion-icon slot="end" name="sunny"></ion-icon>
+    </IonRange>
+  </ion-item>
+
+  <ion-item>
+    <IonRange min="1000" max="2000" step="100" snaps="true" color="secondary"></IonRange>
+  </ion-item>
+
+  <ion-item>
+    <IonRange min="1000" max="2000" step="100" snaps="true" ticks="false" color="secondary"></IonRange>
+  </ion-item>
+
+  <ion-item>
+    <IonDualRange min="21" max="72" step="3" snaps="true"></IonDualRange>
+  </ion-item>
+</ion-list>
     </ion-content>
 @code {
 
