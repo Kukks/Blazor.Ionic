@@ -89,7 +89,6 @@
                   <ion-label>Griff</ion-label>
                   <ion-radio slot="start" value="griff"></ion-radio>
                 </IonItem>
-r
                 <IonItem>
                   <ion-label>Buford</ion-label>
                   <ion-radio slot="start" value="buford"></ion-radio>
@@ -120,29 +119,83 @@ r
 
 <IonItem>
             <ion-label>Jon Snow</ion-label>
-            <ion-checkbox color="primary" Value="true"slot="start"></ion-checkbox>
+            <IonCheckbox color="primary" Value="true"slot="start"></IonCheckbox>
+          </IonItem>
+<IonItem>
+            <ion-label>Jon Snow</ion-label>
+            <IonCheckbox color="primary" Value="true"slot="start"></IonCheckbox>
           </IonItem>
           <IonItem>
-            <ion-checkbox color="dark" Value="true"slot="start"></ion-checkbox>
+            <IonCheckbox color="dark" Value="true"slot="start"></IonCheckbox>
             <ion-label>Daenerys Targaryen</ion-label>
           </IonItem>
           <IonItem>
-            <ion-checkbox disabled slot="start"></ion-checkbox>
+            <IonCheckbox disabled slot="start"></IonCheckbox>
             <ion-label>Arya Stark</ion-label>
           </IonItem>
           <IonItem>
-            <ion-checkbox color="secondary" slot="start"></ion-checkbox>
+            <IonCheckbox color="secondary" slot="start"></IonCheckbox>
             <ion-label>Tyrion Lannister</ion-label>
           </IonItem>
           <IonItem>
-            <ion-checkbox color="danger" Value="true"slot="start"></ion-checkbox>
+            <IonCheckbox color="danger" Value="true"slot="start"></IonCheckbox>
             <ion-label>Sansa Stark</ion-label>
           </IonItem>
           <IonItem>
-            <ion-checkbox color="tertiary" slot="start"></ion-checkbox>
+            <IonCheckbox color="tertiary" slot="start"></IonCheckbox>
             <ion-label>Khal Drogo</ion-label>
           </IonItem>
 </ion-list>
+ <ion-list>
+<ion-list-header lines="full">
+                           <ion-label>
+                               Toggles
+                           </ion-label>
+                       </ion-list-header>
+        <ion-item>
+          <ion-label>Blueberry</ion-label>
+          <IonToggle slot="start" name="blueberry"  Value="true"></IonToggle>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Apple</ion-label>
+          <IonToggle slot="start" name="apple" color="secondary"  Value="true"></IonToggle>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Grape</ion-label>
+          <IonToggle slot="start" name="grape" color="tertiary"  Value="true"></IonToggle>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Kiwi</ion-label>
+          <IonToggle slot="start" name="kiwi" color="success"  Value="true"></IonToggle>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Orange</ion-label>
+          <IonToggle slot="start" name="banana" color="warning"  Value="true"></IonToggle>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Cherry</ion-label>
+          <IonToggle slot="start" name="cherry" color="danger"  Value="true"></IonToggle>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Banana</ion-label>
+          <IonToggle slot="start" name="banana" color="light"  Value="true"></IonToggle>
+        </ion-item>
+        <ion-item>
+          <ion-label>Cantaloupe</ion-label>
+          <IonToggle slot="start" name="cantaloupe" color="medium"  Value="true"></IonToggle>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Blackberry</ion-label>
+          <IonToggle slot="start" name="blackberry" color="dark"  Value="true"></IonToggle>
+        </ion-item>
+      </ion-list>
     </ion-content>
 @code {
 

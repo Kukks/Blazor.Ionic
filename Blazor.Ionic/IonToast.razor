@@ -1,0 +1,57 @@
+@using System.Text.Json.Serialization
+@using Microsoft.JSInterop
+@inherits BaseIonicPresentableComponent<object, Blazor.Ionic.Models.OverlayEventDetail<Blazor.Ionic.Models.IonicComponentDismissPayloadData>>
+
+@code {
+
+    [Parameter(CaptureUnmatchedValues = true)]
+    public Dictionary<string, object> InputAttributes { get; set; }
+
+    [Parameter]
+    public IEnumerable<IonToastButton> Buttons { get; set; }
+
+    protected override async Task CreateElement()
+    {
+        var data = new Dictionary<string, object>();
+        if (Buttons?.Any() is true)
+        {
+            data.Add("buttons", Buttons);
+        }
+        await JsRuntime.InvokeVoidAsync("IonicBridge.createElement", "ion-toast", Id, InputAttributes, data);
+        if (Buttons?.Any() is true)
+        {
+            for (int i = 0; i < Buttons.Count(); i++)
+            {
+                if (Buttons.ElementAt(i).Handler != null)
+                {
+                    await JsRuntime.InvokeVoidAsync("IonicBridge.setWebComponentPropertyWithCallback", Id, $"buttons[{i}].handler", ThisRef, nameof(HandleButton), i);
+                }
+            }
+        }
+        await JsRuntime.InvokeVoidAsync("IonicBridge.registerBlazorCustomHandler", Id, "ionToastDidDismiss", ThisRef, nameof(HandleDismissed));
+        await JsRuntime.InvokeVoidAsync("IonicBridge.registerBlazorCustomHandler", Id, "ionToastDidPresent", ThisRef, nameof(HandlePresented));
+    }
+
+    [JSInvokable(nameof(HandleButton))]
+    public Task HandleButton(IonToastButtonHandlerData data, int id)
+    {
+        return Buttons.ElementAt(id).Handler(data);
+    }
+
+
+    public class IonToastButtonHandlerData
+    {
+        [JsonExtensionData]
+        public Dictionary<string, object> Options { get; set; } = new Dictionary<string, object>();
+    }
+
+    public class IonToastButton
+    {
+        [JsonExtensionData]
+        public Dictionary<string, object> Options { get; set; } = new Dictionary<string, object>();
+
+        [JsonIgnore]
+        public Func<IonToastButtonHandlerData, Task> Handler { get; set; }
+    }
+
+}

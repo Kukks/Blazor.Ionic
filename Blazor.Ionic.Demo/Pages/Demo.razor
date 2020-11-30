@@ -8,6 +8,7 @@
         <ion-button @onclick="ToggleModal" expand="block">Toggle modal (currently @VisibleModal)</ion-button>
         <ion-button @onclick="ToggleActionSheet" expand="block">Toggle action sheet (currently @VisibleActionSheet)</ion-button>
         <ion-button @onclick="TogglePicker" expand="block">Toggle picker (currently @VisiblePicker)</ion-button>
+        <ion-button @onclick="ToggleToast" expand="block">Toggle toast (currently @VisibleToast)</ion-button>
         <ion-list>
             @foreach (var log in Logs)
             {
@@ -39,6 +40,7 @@
     <IonAlert @bind-Visible="@VisibleAlert" message="eeee" Buttons="buttons" Inputs="inputs" backdrop-dismiss="true"></IonAlert>
     <IonActionSheet t @bind-Visible="@VisibleActionSheet" Buttons="actionSheetButtons" header="An action sheet!"></IonActionSheet>
     <IonPicker @bind-Visible="@VisiblePicker" Buttons="pickerButtons" Columns="pickerColumns" ></IonPicker>
+    <IonToast @bind-Visible="@VisibleToast" Buttons="toastButtons" ></IonToast>
 </ion-content>
 
 @code {
@@ -46,6 +48,7 @@
     public IonAlert.IonAlertButton[] buttons;
     public IonActionSheet.IonActionSheetButton[] actionSheetButtons;
     public IonPicker.IonPickerButton[] pickerButtons;
+    public IonToast.IonToastButton[] toastButtons;
     public IonPicker.IonPickerColumn[] pickerColumns;
     public IonAlert.IonAlertInput[] inputs;
     public List<string> Logs = new List<string>();
@@ -54,7 +57,17 @@
     private bool _visibleModal;
     private bool _visibleLoader;
     private bool _visiblePicker;
+    private bool _visibleToast;
 
+    public bool VisibleToast
+    {
+        get => _visibleToast;
+        set
+        {
+            Logs.Add($"VisibleToast {value}");
+            _visibleToast = value;
+        }
+    }
     public bool VisibleLoader
     {
         get => _visibleLoader;
@@ -156,6 +169,40 @@
                 }
             },
             new IonActionSheet.IonActionSheetButton()
+            {
+                Options = new Dictionary<string, object>()
+                {
+                    {"text", "Cancel"},
+                    {"icon", "cancel"},
+                    {"role", "cancel"}
+                },
+                Handler = o =>
+                {
+                    var vals = string.Join(",", o.Options.Select(pair => $"{pair.Key}={pair.Value}").ToArray());
+                    Logs.Add($"cancel clicked! {vals}");
+                    return Task.CompletedTask;
+                }
+            }
+        };
+        
+        toastButtons = new[]
+        {
+            new IonToast.IonToastButton()
+            {
+                Options = new Dictionary<string, object>()
+                {
+                    {"text", "a button!"},
+                    {"icon", "caret-forward-circle"},
+                    {"role", "customrole"}
+                },
+                Handler = o =>
+                {
+                    var vals = string.Join(",", o.Options.Select(pair => $"{pair.Key}={pair.Value}").ToArray());
+                    Logs.Add($"1st option clicked! {(vals)}");
+                    return Task.CompletedTask;
+                }
+            },
+            new IonToast.IonToastButton()
             {
                 Options = new Dictionary<string, object>()
                 {
@@ -303,6 +350,11 @@
     private void TogglePicker()
     {
         VisiblePicker = !VisiblePicker;
+    }
+
+    private void ToggleToast()
+    {
+        VisibleToast = !VisibleToast;
     }
 
 }
