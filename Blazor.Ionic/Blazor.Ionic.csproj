@@ -13,7 +13,7 @@
 </Description>
         <PackageProjectUrl>https://github.com/Kukks/Blazor.Ionic</PackageProjectUrl>
         <PackageLicenseUrl>https://raw.githubusercontent.com/Kukks/Blazor.Ionic/master/LICENSE</PackageLicenseUrl>
-        <PackageVersion>1.0.3</PackageVersion>
+        <PackageVersion>1.0.4</PackageVersion>
         <LangVersion>latest</LangVersion>
         <TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>
     </PropertyGroup>
