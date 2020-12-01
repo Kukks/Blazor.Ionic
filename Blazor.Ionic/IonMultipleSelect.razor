@@ -1,0 +1,67 @@
+@using System.Text.Json.Serialization
+@inherits BaseIonicInputComponent<IEnumerable<TItem>, IonMultipleSelect<TItem>.InputChangeEventDetail>
+@typeparam TItem
+<ion-select multiple="true" @attributes="InputAttributes" @ref="Element">
+    @if (Options is null)
+    {
+        @ChildContent
+    }
+    else
+    {
+        foreach (var option in Options)
+        {
+            <ion-select-option value="@GetOptionIdentifier(option)">@GetOptionText(option)</ion-select-option>
+        }
+    }
+</ion-select>
+
+@code {
+
+    [Parameter]
+    public IEnumerable<TItem> Options { get; set; }
+
+    [Parameter]
+    public Func<TItem, string> GetOptionIdentifier { get; set; } = arg =>
+    {
+        if (arg is string s)
+        {
+            return s;
+        }
+        if (arg is null)
+        {
+            return null;
+        }
+        return arg.GetHashCode().ToString();
+    };
+
+    [Parameter]
+    public Func<TItem, string> GetOptionText { get; set; } = (arg1) => arg1?.ToString();
+
+    protected override bool Compare(IEnumerable<TItem> a, IEnumerable<TItem> b)
+    {
+        var aIdentifiers = a.Select(GetOptionIdentifier);
+        var bIdentifiers = b.Select(GetOptionIdentifier);
+        return ((aIdentifiers?.Count() ?? 0) == (bIdentifiers?.Count() ?? 0) && (!aIdentifiers.Except(bIdentifiers).Any() || !bIdentifiers.Except(aIdentifiers).Any()));
+    }
+
+    protected override Task HandleChangeCore(InputChangeEventDetail detail)
+    {
+        detail.Options = Options?.ToDictionary(GetOptionIdentifier, arg => arg);
+        return base.HandleChangeCore(detail);
+    }
+
+    public class InputChangeEventDetail : BaseIonicChangeEventDetail<IEnumerable<TItem>>
+    {
+        [JsonPropertyName("value")]
+        public string[] Value { get; set; }
+
+        [JsonIgnore]
+        public Dictionary<string, TItem> Options { get; set; }
+
+        public override IEnumerable<TItem> GetValue()
+        {
+            return Options?.Where(pair => Value?.Contains(pair.Key) is true).Select(pair => pair.Value).ToArray() ?? Array.Empty<TItem>();
+        }
+    }
+
+}

@@ -1,7 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk.Razor">
 
     <PropertyGroup>
-        <TargetFramework>netstandard2.0</TargetFramework>
         <RazorLangVersion>3.0</RazorLangVersion>
         <Title>Ionic5 for Blazor</Title>
         <Authors>Andrew Camilleri / Kukks</Authors>
@@ -15,6 +14,8 @@
         <PackageProjectUrl>https://github.com/Kukks/Blazor.Ionic</PackageProjectUrl>
         <PackageLicenseUrl>https://raw.githubusercontent.com/Kukks/Blazor.Ionic/master/LICENSE</PackageLicenseUrl>
         <PackageVersion>1.0.3</PackageVersion>
+        <LangVersion>latest</LangVersion>
+        <TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>
     </PropertyGroup>
 
 

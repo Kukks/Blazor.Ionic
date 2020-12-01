@@ -4,6 +4,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blazor.Ionic", "Blazor.Ioni
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blazor.Ionic.Demo", "Blazor.Ionic.Demo\Blazor.Ionic.Demo.csproj", "{3249C51A-3B65-44AA-8245-F53C3AC083E0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blazor.Ionic.Demo.Server", "Blazor.Ionic.Demo.Server\Blazor.Ionic.Demo.Server.csproj", "{3178ACDE-BDA5-4D86-B2B5-947C3007052C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blazor.Ionic.Demo.UI", "Blazor.Ionic.Demo.UI\Blazor.Ionic.Demo.UI.csproj", "{FAFCE34A-AA08-4544-946C-BC1204940038}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +22,13 @@ Global
 		{3249C51A-3B65-44AA-8245-F53C3AC083E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3249C51A-3B65-44AA-8245-F53C3AC083E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3249C51A-3B65-44AA-8245-F53C3AC083E0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3178ACDE-BDA5-4D86-B2B5-947C3007052C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3178ACDE-BDA5-4D86-B2B5-947C3007052C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3178ACDE-BDA5-4D86-B2B5-947C3007052C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3178ACDE-BDA5-4D86-B2B5-947C3007052C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FAFCE34A-AA08-4544-946C-BC1204940038}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FAFCE34A-AA08-4544-946C-BC1204940038}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FAFCE34A-AA08-4544-946C-BC1204940038}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FAFCE34A-AA08-4544-946C-BC1204940038}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

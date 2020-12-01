@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
@@ -21,10 +22,15 @@ namespace Blazor.Ionic
             get => _value;
             set
             {
-                if (Equals(_value, value)) return;
+                if (Compare(_value, value)) return;
                 _value = value;
                 ValueChanged.InvokeAsync(value);
             }
+        }
+
+        protected virtual bool Compare(TInputType item1, TInputType item2)
+        {
+            return Equals(item1, item2);
         }
 
         [Parameter] public EventCallback<TInputType> ValueChanged { get; set; }
@@ -37,7 +43,7 @@ namespace Blazor.Ionic
         {
             if (firstRender)
             {
-                ThisRef = DotNetObjectReference.Create(this);
+                ThisRef = ThisRef ?? DotNetObjectReference.Create(this);
                 await JsRuntime.InvokeVoidAsync("IonicBridge.registerBlazorCustomHandler", Element, "ionChange",
                     ThisRef, nameof(HandleChange));
             }
@@ -47,6 +53,11 @@ namespace Blazor.Ionic
 
         [JSInvokable(nameof(HandleChange))]
         public virtual Task HandleChange(TChangeEventDetail detail)
+        {
+            return HandleChangeCore(detail);
+        }
+
+        protected virtual Task HandleChangeCore(TChangeEventDetail detail)
         {
             Value = detail.GetValue();
             return Task.CompletedTask;

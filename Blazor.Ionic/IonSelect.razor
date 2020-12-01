@@ -1,0 +1,70 @@
+@using System.Text.Json.Serialization
+@using System.Text.Json
+@inherits BaseIonicInputComponent<TItem, IonSelect<TItem>.InputChangeEventDetail>
+@typeparam TItem
+<ion-select multiple="false" value="@GetOptionIdentifier(Value)" @attributes="InputAttributes" @ref="Element">
+    @if (Options is null)
+    {
+        @ChildContent
+    }
+    else
+    {
+        foreach (var option in Options)
+        {
+            <ion-select-option value="@GetOptionIdentifier(option)">@GetOptionText(option)</ion-select-option>
+        }
+    }
+</ion-select>
+
+@code {
+
+    [Parameter]
+    public IEnumerable<TItem> Options { get; set; }
+
+    [Parameter]
+    public Func<TItem, string> GetOptionIdentifier { get; set; } = arg =>
+    {
+        if (arg is string s)
+        {
+            return s;
+        }
+        if (arg is null)
+        {
+            return null;
+        }
+        return arg.GetHashCode().ToString();
+    };
+
+    [Parameter]
+    public Func<TItem, string> GetOptionText { get; set; } = (arg1) => arg1?.ToString();
+
+    protected override bool Compare(TItem item1, TItem item2)
+    {
+        return GetOptionIdentifier(item1) == GetOptionIdentifier(item2);
+    }
+
+    protected override Task HandleChangeCore(InputChangeEventDetail detail)
+    {
+        detail.Options = Options?.ToDictionary(GetOptionIdentifier, arg => arg);
+        return base.HandleChangeCore(detail);
+    }
+
+    public class InputChangeEventDetail : BaseIonicChangeEventDetail<TItem>
+    {
+        [JsonPropertyName("value")]
+        public string Value { get; set; }
+
+        [JsonIgnore]
+        public Dictionary<string, TItem> Options { get; set; }
+
+        public override TItem GetValue()
+        {
+            if (Options != null && Value != null && Options.TryGetValue(Value, out var matched))
+            {
+                return matched;
+            }
+            return default;
+        }
+    }
+
+}
