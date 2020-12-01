@@ -23,9 +23,14 @@ namespace Blazor.Ionic
             set
             {
                 if (Compare(_value, value)) return;
-                _value = value;
+                SetValue(value);
                 ValueChanged.InvokeAsync(value);
             }
+        }
+
+        protected virtual void SetValue(TInputType value)
+        {
+            _value = value;   
         }
 
         protected virtual bool Compare(TInputType item1, TInputType item2)

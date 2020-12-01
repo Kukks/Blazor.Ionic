@@ -27,29 +27,25 @@
                 MultiSelect
             </ion-label>
         </ion-list-header>
-          <!--
-<ion-item>
-                    <ion-label>Select control with own child content provided</ion-label>
-                    <IonMultiSelect TItem="string"  ok-text="Okay" cancel-text="Dismiss">
-                        <ion-select-option value="brown">Brown</ion-select-option>
-                        <ion-select-option value="blonde">Blonde</ion-select-option>
-                        <ion-select-option value="black">Black</ion-select-option>
-                        <ion-select-option value="red">Red</ion-select-option>
-                    </IonMultiSelect>
-                </ion-item>
+        <ion-item>
+            <ion-label>Select control with own child content provided</ion-label>
+            <IonMultipleSelect TItem="string"  @bind-Value="SelectedValues"  ok-text="Okay" cancel-text="Dismiss">
+                <ion-select-option value="item1">1</ion-select-option>
+                <ion-select-option value="item2">2</ion-select-option>
+                <ion-select-option value="item3">3</ion-select-option>
+            </IonMultipleSelect>
+        </ion-item>
+         <ion-item>
+            <ion-label>Select control with C# options provided. Selected value: @SelectedValues.Count()</ion-label>
+            <IonMultipleSelect Options="@Options" @bind-Value="SelectedValues" ok-text="Okay" cancel-text="Dismiss">
+            </IonMultipleSelect>
+        </ion-item>
         
                 <ion-item>
-                    <ion-label>Select control with C# options provided. Selected value: @SelectedValues</ion-label>
-                    <IonMultiSelect Options="@Options" @bind-Value="SelectedValues" ok-text="Okay" cancel-text="Dismiss">
-                    </IonMultiSelect>
+                    <ion-label>Select control with C# complex options provided. Selected value: @SelectedComplexValues.Count()</ion-label>
+                    <IonMultipleSelect Options="@ComplexOptions" @bind-Value="SelectedComplexValues" ok-text="Okay" cancel-text="Dismiss">
+                    </IonMultipleSelect>
                 </ion-item>
-        
-                <ion-item>
-                    <ion-label>Select control with C# complex options provided. Selected value: @SelectedComplexValues</ion-label>
-                    <IonMultiSelect Options="@ComplexOptions" @bind-Value="SelectedComplexValues" ok-text="Okay" cancel-text="Dismiss">
-                    </IonMultiSelect>
-                </ion-item>
--->
     </ion-list>
 </ion-content>
 

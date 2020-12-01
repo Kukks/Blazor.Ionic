@@ -1,4 +1,5 @@
 @using System.Text.Json.Serialization
+@using Microsoft.JSInterop
 @inherits BaseIonicInputComponent<IEnumerable<TItem>, IonMultipleSelect<TItem>.InputChangeEventDetail>
 @typeparam TItem
 <ion-select multiple="true" @attributes="InputAttributes" @ref="Element">
@@ -17,8 +18,15 @@
 
 @code {
 
+    private readonly Queue<Func<Task>> _renderActions = new Queue<Func<Task>>();
     [Parameter]
     public IEnumerable<TItem> Options { get; set; }
+
+    protected override void SetValue(IEnumerable<TItem> value)
+    {
+        JsRuntime.InvokeVoidAsync("IonicBridge.setWebComponentProperty", Element, $"value", value?.Select(GetOptionIdentifier));
+        base.SetValue(value);
+    }
 
     [Parameter]
     public Func<TItem, string> GetOptionIdentifier { get; set; } = arg =>
@@ -39,9 +47,15 @@
 
     protected override bool Compare(IEnumerable<TItem> a, IEnumerable<TItem> b)
     {
-        var aIdentifiers = a.Select(GetOptionIdentifier);
-        var bIdentifiers = b.Select(GetOptionIdentifier);
-        return ((aIdentifiers?.Count() ?? 0) == (bIdentifiers?.Count() ?? 0) && (!aIdentifiers.Except(bIdentifiers).Any() || !bIdentifiers.Except(aIdentifiers).Any()));
+        var aIdentifiers = a?.Select(GetOptionIdentifier);
+        var bIdentifiers = b?.Select(GetOptionIdentifier);
+        var aIdentifiersCount = aIdentifiers?.Count() ?? 0;
+        var bIdentifiersCount = bIdentifiers?.Count() ?? 0;
+        if (aIdentifiersCount == bIdentifiersCount && bIdentifiersCount == 0)
+        {
+            return true;
+        }
+        return (aIdentifiersCount == bIdentifiersCount && (!aIdentifiers.Except(bIdentifiers).Any() || !bIdentifiers.Except(aIdentifiers).Any()));
     }
 
     protected override Task HandleChangeCore(InputChangeEventDetail detail)
@@ -49,7 +63,15 @@
         detail.Options = Options?.ToDictionary(GetOptionIdentifier, arg => arg);
         return base.HandleChangeCore(detail);
     }
-
+    
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await base.OnAfterRenderAsync(firstRender);
+        while (_renderActions.Any())
+        {
+            await _renderActions.Dequeue().Invoke();
+        }
+    }
     public class InputChangeEventDetail : BaseIonicChangeEventDetail<IEnumerable<TItem>>
     {
         [JsonPropertyName("value")]
