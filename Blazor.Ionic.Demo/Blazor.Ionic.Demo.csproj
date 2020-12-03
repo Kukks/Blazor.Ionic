@@ -29,15 +29,17 @@
         <NpmInstallStampFile>node_modules/.install-stamp</NpmInstallStampFile>
     </PropertyGroup>
     <ItemGroup>
-        <MySourceFiles Include="node_modules\@ionic\core\css\ionic.bundle.css;node_modules\@ionic\core\dist\ionic\**\*.*"/>
+        <IonicStyleFiles Include="node_modules\@ionic\core\css\ionic.bundle.css"/>
+        <IonicJSFiles Include="node_modules\@ionic\core\dist\ionic\**\*.*"/>
     </ItemGroup>
     <Target Name="NpmInstall"
             BeforeTargets="BeforeBuild"
             Inputs="package.json"
             Outputs="$(NpmInstallStampFile)">
         <Exec Command="npm install" />
-
-        <Copy SourceFiles="@(MySourceFiles)" DestinationFiles="@(MySourceFiles->'$(ProjectDir)\wwwroot\ionic\%(RecursiveDir)%(Filename)%(Extension)')" />
+        <RemoveDir Directories="$(ProjectDir)\wwwroot\ionic"/>
+        <Copy SourceFiles="@(IonicStyleFiles)" DestinationFiles="@(IonicStyleFiles->'$(ProjectDir)\wwwroot\ionic\%(RecursiveDir)%(Filename)%(Extension)')" UseSymboliclinksIfPossible="true"  />
+        <Copy SourceFiles="@(IonicJSFiles)" DestinationFiles="@(IonicJSFiles->'$(ProjectDir)\wwwroot\ionic\%(RecursiveDir)%(Filename)%(Extension)')"  UseSymboliclinksIfPossible="true" />
         <Touch Files="$(NpmInstallStampFile)" AlwaysCreate="true" />
     </Target>
 
