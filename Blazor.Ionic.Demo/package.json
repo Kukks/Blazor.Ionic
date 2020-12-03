@@ -2,8 +2,8 @@
   "name": "blazor.ionic.demo",
   "version": "1.0.0",
   "description": "js deps for demo",
-  "license": "https://github.com/Kukks/Blazor.Ionic/blob/master/LICENSE",
-  "repository":  "https://github.com/kukks/blazor.ionic",
+  "license": "MIT",
+  "repository": "https://github.com/kukks/blazor.ionic",
   "dependencies": {
     "@ionic/core": "^5.5.1"
   }
