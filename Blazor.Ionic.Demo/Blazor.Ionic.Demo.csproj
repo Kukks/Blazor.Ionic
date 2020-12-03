@@ -24,5 +24,21 @@
         <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="3.1.8" />
         <PackageReference Include="LiveSharp" Version="1.6.33" />
     </ItemGroup>
+    <PropertyGroup>
+        <!-- File with mtime of last successful npm install -->
+        <NpmInstallStampFile>node_modules/.install-stamp</NpmInstallStampFile>
+    </PropertyGroup>
+    <ItemGroup>
+        <MySourceFiles Include="node_modules\@ionic\core\css\ionic.bundle.css;node_modules\@ionic\core\dist\ionic\**\*.*"/>
+    </ItemGroup>
+    <Target Name="NpmInstall"
+            BeforeTargets="BeforeBuild"
+            Inputs="package.json"
+            Outputs="$(NpmInstallStampFile)">
+        <Exec Command="npm install" />
+
+        <Copy SourceFiles="@(MySourceFiles)" DestinationFiles="@(MySourceFiles->'$(ProjectDir)\wwwroot\ionic\%(RecursiveDir)%(Filename)%(Extension)')" />
+        <Touch Files="$(NpmInstallStampFile)" AlwaysCreate="true" />
+    </Target>
 
 </Project>
