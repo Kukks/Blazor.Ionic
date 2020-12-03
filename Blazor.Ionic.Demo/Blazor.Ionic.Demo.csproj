@@ -28,32 +28,9 @@
         <!-- File with mtime of last successful npm install -->
         <NpmInstallStampFile>node_modules/.install-stamp</NpmInstallStampFile>
     </PropertyGroup>
-    <ItemGroup>
-        <IonicStyleFiles Include="node_modules/@ionic/core/css/ionic.bundle.css"/>
-        <IonicJSFiles Include="node_modules/@ionic/core/dist/ionic/*"/>
-        <IonicJSFiles3 Include="node_modules/@ionic/core/dist/ionic/**"/>
-        <IonicJSFiles4 Include="node_modules/@ionic/core/dist/ionic/**/*"/>
-        <IonicJSFiles5 Include="node_modules/@ionic/core/dist/ionic/**/*.*"/>
-    </ItemGroup>
-    <Target Name="PublishCopy" AfterTargets="Publish">
-
-        <Exec Command="ls node_modules/@ionic/core/dist/ionic" />
-        <RemoveDir Directories="$(PublishDir)/wwwroot/ionic2"/>
-<!--        <Copy SourceFiles="@(IonicJSFiles)" DestinationFiles="@(IonicJSFiles->'$(PublishDir)/wwwroot/ionic2/%(RecursiveDir)%(Filename)%(Extension)')"   />-->
-        <Copy SourceFiles="@(IonicJSFiles3)" DestinationFiles="@(IonicJSFiles3->'$(PublishDir)/wwwroot/ionic3/%(RecursiveDir)%(Filename)%(Extension)')"   />
-        <Copy SourceFiles="@(IonicJSFiles4)" DestinationFiles="@(IonicJSFiles4->'$(PublishDir)/wwwroot/ionic4/%(RecursiveDir)%(Filename)%(Extension)')"   />
-        <Copy SourceFiles="@(IonicJSFiles5)" DestinationFiles="@(IonicJSFiles5->'$(PublishDir)/wwwroot/ionic5/%(RecursiveDir)%(Filename)%(Extension)')"   />
-    </Target>
     
-    <Target 
-            Name="NpmInstall"
-            BeforeTargets="BeforeBuild"
-            Inputs="package.json"
-            Outputs="$(NpmInstallStampFile)">
+    <Target Name="NpmInstall" BeforeTargets="BeforeBuild" Inputs="package.json" Outputs="$(NpmInstallStampFile)">
         <Exec Command="npm install" />
-        <RemoveDir Directories="$(ProjectDir)/wwwroot/ionic"/>
-        <Copy SourceFiles="@(IonicStyleFiles)" DestinationFiles="@(IonicStyleFiles->'$(ProjectDir)/wwwroot/ionic/%(RecursiveDir)%(Filename)%(Extension)')"  />
-        <Copy SourceFiles="@(IonicJSFiles)" DestinationFiles="@(IonicJSFiles->'$(ProjectDir)/wwwroot/ionic/%(RecursiveDir)%(Filename)%(Extension)')"  />
         <Touch Files="$(NpmInstallStampFile)" AlwaysCreate="true" />
     </Target>
 
