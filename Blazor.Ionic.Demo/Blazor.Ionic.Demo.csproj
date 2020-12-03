@@ -37,6 +37,7 @@
     </ItemGroup>
     <Target Name="PublishCopy" AfterTargets="Publish">
 
+        <Exec Command="ls node_modules\@ionic\core\dist\ionic" />
         <RemoveDir Directories="$(PublishDir)\wwwroot\ionic2"/>
 <!--        <Copy SourceFiles="@(IonicJSFiles)" DestinationFiles="@(IonicJSFiles->'$(PublishDir)\wwwroot\ionic2\%(RecursiveDir)%(Filename)%(Extension)')"   />-->
         <Copy SourceFiles="@(IonicJSFiles3)" DestinationFiles="@(IonicJSFiles3->'$(PublishDir)\wwwroot\ionic3\%(RecursiveDir)%(Filename)%(Extension)')"   />
