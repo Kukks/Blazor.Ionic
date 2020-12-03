@@ -36,13 +36,13 @@
             </IonMultipleSelect>
         </ion-item>
          <ion-item>
-            <ion-label>Select control with C# options provided. Selected value: @SelectedValues.Count()</ion-label>
+            <ion-label>Select control with C# options provided. Selected value: @SelectedValues?.Count()</ion-label>
             <IonMultipleSelect Options="@Options" @bind-Value="SelectedValues" ok-text="Okay" cancel-text="Dismiss">
             </IonMultipleSelect>
         </ion-item>
         
                 <ion-item>
-                    <ion-label>Select control with C# complex options provided. Selected value: @SelectedComplexValues.Count()</ion-label>
+                    <ion-label>Select control with C# complex options provided. Selected value: @SelectedComplexValues?.Count()</ion-label>
                     <IonMultipleSelect Options="@ComplexOptions" @bind-Value="SelectedComplexValues" ok-text="Okay" cancel-text="Dismiss">
                     </IonMultipleSelect>
                 </ion-item>
