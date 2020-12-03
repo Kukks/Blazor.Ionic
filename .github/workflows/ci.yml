@@ -49,6 +49,7 @@ jobs:
           keep_files: false
           force_orphan: true
       - name: Publish NuGet
+        if: ${{ github.ref == 'refs/heads/master' }} # Publish only when the push is on master
         uses: brandedoutcast/publish-nuget@v2.5.5
         with:
           PROJECT_FILE_PATH: Blazor.Ionic/Blazor.Ionic.csproj
