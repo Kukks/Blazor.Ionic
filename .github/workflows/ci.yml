@@ -36,7 +36,7 @@ jobs:
         uses: finnp/create-file-action@master
         env:
           FILE_NAME: Blazor.Ionic.Demo/bin/Release/netstandard2.1/publish/wwwroot/404.html
-          FILE_BASE64: PCFET0NUWVBFIGh0bWw+PGh0bWw+PGhlYWQ+PG1ldGEgY2hhcnNldD0idXRmLTgiPjx0aXRsZT5TaW5nbGUgUGFnZSBBcHBzIGZvciBHaXRIdWIgUGFnZXM8L3RpdGxlPjxzY3JpcHQgdHlwZT0idGV4dC9qYXZhc2NyaXB0Ij52YXIgcGF0aFNlZ21lbnRzVG9LZWVwPTE7dmFyIGw9d2luZG93LmxvY2F0aW9uO2wucmVwbGFjZShsLnByb3RvY29sKycvLycrbC5ob3N0bmFtZSsobC5wb3J0Pyc6JytsLnBvcnQ6JycpKyBsLnBhdGhuYW1lLnNwbGl0KCcvJykuc2xpY2UoMCwxK3BhdGhTZWdtZW50c1RvS2VlcCkuam9pbignLycpKycvPy8nKyBsLnBhdGhuYW1lLnNsaWNlKDEpLnNwbGl0KCcvJykuc2xpY2UocGF0aFNlZ21lbnRzVG9LZWVwKS5qb2luKCcvJykucmVwbGFjZSgvJi9nLCd+YW5kficpKyAobC5zZWFyY2g/JyYnK2wuc2VhcmNoLnNsaWNlKDEpLnJlcGxhY2UoLyYvZywnfmFuZH4nKTonJykrIGwuaGFzaCk7PC9zY3JpcHQ+IDwvaGVhZD48Ym9keT48L2JvZHk+PC9odG1sPg==
+          FILE_BASE64: PCFET0NUWVBFIGh0bWw+PGh0bWw+PGhlYWQ+PG1ldGEgY2hhcnNldD0idXRmLTgiPjx0aXRsZT5TaW5nbGUgUGFnZSBBcHBzIGZvciBHaXRIdWIgUGFnZXM8L3RpdGxlPiA8c2NyaXB0IHR5cGU9InRleHQvamF2YXNjcmlwdCI+dmFyIHBhdGhTZWdtZW50c1RvS2VlcD0xO3ZhciBsPXdpbmRvdy5sb2NhdGlvbjtsLnJlcGxhY2UobC5wcm90b2NvbCsnLy8nK2wuaG9zdG5hbWUrKGwucG9ydD8nOicrbC5wb3J0OicnKStsLnBhdGhuYW1lLnNwbGl0KCcvJykuc2xpY2UoMCwxK3BhdGhTZWdtZW50c1RvS2VlcCkuam9pbignLycpKycvJytsLnBhdGhuYW1lLnNsaWNlKDEpLnNwbGl0KCcvJykuc2xpY2UocGF0aFNlZ21lbnRzVG9LZWVwKS5qb2luKCcvJykucmVwbGFjZSgvJi9nLCd+YW5kficpKyhsLnNlYXJjaD8nJicrbC5zZWFyY2guc2xpY2UoMSkucmVwbGFjZSgvJi9nLCd+YW5kficpOicnKStsLmhhc2gpOzwvc2NyaXB0PiA8L2hlYWQ+PGJvZHk+PC9ib2R5PjwvaHRtbD4=
       # Publish the website
       - name: GitHub Pages action
         if: ${{ github.ref == 'refs/heads/master' }} # Publish only when the push is on master
