@@ -42,7 +42,7 @@ namespace Blazor.Ionic
         protected DotNetObjectReference<BaseIonicPresentableComponent<TPresentedData, TDismissedData>> ThisRef;
         private bool _realVisible;
         private bool _visible;
-        private readonly Queue<Func<Task>> _renderActions = new();
+        private readonly Queue<Func<Task>> _renderActions = new Queue<Func<Task>>();
         protected string Id;
 
         [JSInvokable(nameof(HandleDismissed))]
