@@ -7,7 +7,7 @@ using Microsoft.JSInterop;
 
 namespace Blazor.Ionic
 {
-    public abstract class BaseIonicPresentableComponent<TPresentedData, TDismissedData> : ComponentBase
+    public abstract class BaseIonicPresentableComponent<TPresentedData, TDismissedData> : ComponentBase, IDisposable
     {
         [Inject] protected IJSRuntime JsRuntime { get; set; }
 
@@ -42,7 +42,7 @@ namespace Blazor.Ionic
         protected DotNetObjectReference<BaseIonicPresentableComponent<TPresentedData, TDismissedData>> ThisRef;
         private bool _realVisible;
         private bool _visible;
-        private readonly Queue<Func<Task>> _renderActions = new Queue<Func<Task>>();
+        private readonly Queue<Func<Task>> _renderActions = new();
         protected string Id;
 
         [JSInvokable(nameof(HandleDismissed))]
@@ -88,6 +88,11 @@ namespace Blazor.Ionic
             }
 
             await base.OnAfterRenderAsync(firstRender);
+        }
+
+        public virtual void Dispose()
+        {
+            ThisRef?.Dispose();
         }
     }
 }

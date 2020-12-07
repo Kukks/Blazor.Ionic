@@ -6,7 +6,7 @@ using Microsoft.JSInterop;
 
 namespace Blazor.Ionic
 {
-    public abstract class BaseIonicInputComponent<TInputType, TChangeEventDetail> : ComponentBase
+    public abstract class BaseIonicInputComponent<TInputType, TChangeEventDetail> : ComponentBase, IDisposable
         where TChangeEventDetail : BaseIonicChangeEventDetail<TInputType>
     {
         private TInputType _value;
@@ -48,7 +48,7 @@ namespace Blazor.Ionic
         {
             if (firstRender)
             {
-                ThisRef = ThisRef ?? DotNetObjectReference.Create(this);
+                ThisRef ??= DotNetObjectReference.Create(this);
                 await JsRuntime.InvokeVoidAsync("IonicBridge.registerBlazorCustomHandler", Element, "ionChange",
                     ThisRef, nameof(HandleChange));
             }
@@ -66,6 +66,11 @@ namespace Blazor.Ionic
         {
             Value = detail.GetValue();
             return Task.CompletedTask;
+        }
+
+        public void Dispose()
+        {
+            ThisRef?.Dispose();
         }
     }
 
