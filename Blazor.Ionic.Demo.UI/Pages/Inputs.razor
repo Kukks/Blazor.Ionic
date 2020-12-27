@@ -118,32 +118,8 @@
         </ion-list-header>
 
         <IonItem>
-            <ion-label>Jon Snow</ion-label>
-            <IonCheckbox color="primary" Value="true" slot="start"></IonCheckbox>
-        </IonItem>
-        <IonItem>
-            <ion-label>Jon Snow</ion-label>
-            <IonCheckbox color="primary" Value="true" slot="start"></IonCheckbox>
-        </IonItem>
-        <IonItem>
-            <IonCheckbox color="dark" Value="true" slot="start"></IonCheckbox>
-            <ion-label>Daenerys Targaryen</ion-label>
-        </IonItem>
-        <IonItem>
-            <IonCheckbox disabled slot="start"></IonCheckbox>
-            <ion-label>Arya Stark</ion-label>
-        </IonItem>
-        <IonItem>
-            <IonCheckbox color="secondary" slot="start"></IonCheckbox>
-            <ion-label>Tyrion Lannister</ion-label>
-        </IonItem>
-        <IonItem>
-            <IonCheckbox color="danger" Value="true" slot="start"></IonCheckbox>
-            <ion-label>Sansa Stark</ion-label>
-        </IonItem>
-        <IonItem>
-            <IonCheckbox color="tertiary" slot="start"></IonCheckbox>
-            <ion-label>Khal Drogo</ion-label>
+            <ion-label>Jon Snow checkbox value:  @CheckboxValue</ion-label> 
+            <IonCheckbox color="primary" @bind-Value="CheckboxValue" slot="start"></IonCheckbox>
         </IonItem>
     </ion-list>
     <ion-list>
@@ -152,80 +128,46 @@
                 Toggles
             </ion-label>
         </ion-list-header>
-        <ion-item>
-            <ion-label>Blueberry</ion-label>
-            <IonToggle slot="start" name="blueberry" Value="true"></IonToggle>
-        </ion-item>
-
-        <ion-item>
-            <ion-label>Apple</ion-label>
-            <IonToggle slot="start" name="apple" color="secondary" Value="true"></IonToggle>
-        </ion-item>
-
-        <ion-item>
-            <ion-label>Grape</ion-label>
-            <IonToggle slot="start" name="grape" color="tertiary" Value="true"></IonToggle>
-        </ion-item>
-
-        <ion-item>
-            <ion-label>Kiwi</ion-label>
-            <IonToggle slot="start" name="kiwi" color="success" Value="true"></IonToggle>
-        </ion-item>
-
-        <ion-item>
-            <ion-label>Orange</ion-label>
-            <IonToggle slot="start" name="banana" color="warning" Value="true"></IonToggle>
-        </ion-item>
-
-        <ion-item>
-            <ion-label>Cherry</ion-label>
-            <IonToggle slot="start" name="cherry" color="danger" Value="true"></IonToggle>
-        </ion-item>
-
-        <ion-item>
-            <ion-label>Banana</ion-label>
-            <IonToggle slot="start" name="banana" color="light" Value="true"></IonToggle>
-        </ion-item>
-        <ion-item>
-            <ion-label>Cantaloupe</ion-label>
-            <IonToggle slot="start" name="cantaloupe" color="medium" Value="true"></IonToggle>
-        </ion-item>
-
-        <ion-item>
-            <ion-label>Blackberry</ion-label>
-            <IonToggle slot="start" name="blackberry" color="dark" Value="true"></IonToggle>
-        </ion-item>
+        <IonItem>
+            <ion-label>Blueberry  @ToggleValue</ion-label>
+            <IonToggle slot="start" name="blueberry" @bind-Value="ToggleValue"></IonToggle>
+        </IonItem>
     </ion-list>
     <ion-list>
-        <ion-item>
+        <ion-list-header lines="full">
+            <ion-label>
+                Ranges
+            </ion-label>
+        </ion-list-header>
+        <IonItem>
             <IonRange color="danger" pin="true"></IonRange>
-        </ion-item>
+        </IonItem>
 
-        <ion-item>
+        <IonItem>
             <IonRange min="-200" max="200" color="secondary">
                 <ion-label slot="start">-200</ion-label>
                 <ion-label slot="end">200</ion-label>
             </IonRange>
-        </ion-item>
+        </IonItem>
 
-        <ion-item>
+        <IonItem>
             <IonRange min="20" max="80" step="2">
                 <ion-icon size="small" slot="start" name="sunny"></ion-icon>
                 <ion-icon slot="end" name="sunny"></ion-icon>
             </IonRange>
-        </ion-item>
+        </IonItem>
 
-        <ion-item>
+        <IonItem>
             <IonRange min="1000" max="2000" step="100" snaps="true" color="secondary"></IonRange>
-        </ion-item>
+        </IonItem>
 
-        <ion-item>
+        <IonItem>
             <IonRange min="1000" max="2000" step="100" snaps="true" ticks="false" color="secondary"></IonRange>
-        </ion-item>
+        </IonItem>
 
-        <ion-item>
+        <IonItem>
             <IonDualRange min="21" max="72" step="3" snaps="true"></IonDualRange>
-        </ion-item>
+        </IonItem>
     </ion-list>
 
 </ion-content>
@@ -244,6 +186,8 @@
     public string Input1 { get; set; }
     public int? Input2 { get; set; }
     public string Input3 { get; set; }
+    public bool CheckboxValue {get; set; }
+    public bool ToggleValue {get; set; }
 
 
 }

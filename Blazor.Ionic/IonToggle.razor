@@ -1,5 +1,5 @@
 @using System.Text.Json.Serialization
-@inherits BaseIonicInputComponent<bool?, IonToggle.InputChangeEventDetail>
+@inherits BaseIonicInputComponent<bool, IonToggle.InputChangeEventDetail>
 
 <ion-toggle checked="@Value" value="@NativeValue"@attributes="InputAttributes" @ref="Element">@ChildContent</ion-toggle>
 
@@ -7,12 +7,12 @@
 
     [Parameter]
     public string NativeValue { get; set; }
-    public class InputChangeEventDetail : BaseIonicChangeEventDetail<bool?>
+    public class InputChangeEventDetail : BaseIonicChangeEventDetail<bool>
     {
         [JsonPropertyName("checked")]
-        public bool? Value { get; set; }
+        public bool Value { get; set; }
 
-        public override bool? GetValue()
+        public override bool GetValue()
         {
             return Value;
         }

@@ -3,13 +3,13 @@
 
 <ion-content class="ion-padding">
     <section>
-        <ion-button @onclick="ToggleLoader" expand="block">Toggle loader (currently @VisibleLoader)</ion-button>
-        <ion-button @onclick="ToggleAlert" expand="block">Toggle alert (currently @VisibleAlert)</ion-button>
-        <ion-button @onclick="ToggleModal" expand="block">Toggle modal (currently @VisibleModal)</ion-button>
-        <ion-button @onclick="ToggleActionSheet" expand="block">Toggle action sheet (currently @VisibleActionSheet)</ion-button>
-        <ion-button @onclick="TogglePicker" expand="block">Toggle picker (currently @VisiblePicker)</ion-button>
-        <ion-button @onclick="ToggleToast" expand="block">Toggle toast (currently @VisibleToast)</ion-button>
-        <ion-button @onclick="TogglePopover" expand="block">Toggle popover (currently @VisiblePopover)</ion-button>
+        <IonButton OnClick="ToggleLoader" expand="block">Toggle loader (currently @VisibleLoader)</IonButton>
+        <IonButton OnClick="ToggleAlert" expand="block">Toggle alert (currently @VisibleAlert)</IonButton>
+        <IonButton OnClick="ToggleModal" expand="block">Toggle modal (currently @VisibleModal)</IonButton>
+        <IonButton OnClick="ToggleActionSheet" expand="block">Toggle action sheet (currently @VisibleActionSheet)</IonButton>
+        <IonButton OnClick="TogglePicker" expand="block">Toggle picker (currently @VisiblePicker)</IonButton>
+        <IonButton OnClick="ToggleToast" expand="block">Toggle toast (currently @VisibleToast)</IonButton>
+        <IonButton OnClick="TogglePopover" expand="block">Toggle popover (currently @VisiblePopover)</IonButton>
         <ion-list>
             @foreach (var log in Logs)
             {
