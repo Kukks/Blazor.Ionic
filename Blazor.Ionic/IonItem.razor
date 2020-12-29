@@ -1,7 +1,65 @@
+@using Microsoft.AspNetCore.Components.Forms
+@using Microsoft.JSInterop
+@using System.Linq.Expressions
 @inherits BaseIonicAnchorRenderableComponent
-
+@inject IJSRuntime JsRuntime
 <ion-item
-    @attributes="InputAttributes"
+    @ref="element"
+     @attributes="InputAttributes"
      @onclick='OnClickCallback' @onclick:preventDefault="@ShouldInterceptHref">
     @ChildContent
 </ion-item>
+
+@code
+{
+    private readonly Queue<Func<Task>> _renderActions = new Queue<Func<Task>>();
+    private ElementReference element;
+    private EditContext _editContext;
+
+    [CascadingParameter]
+    protected EditContext EditContext
+    {
+        get => _editContext;
+        set
+        {
+            if (_editContext != null)
+            {
+                _editContext.OnValidationStateChanged -= EditContextOnOnValidationStateChanged;
+            }
+            _editContext = value;
+            if (_editContext != null)
+            {
+                _editContext.OnValidationStateChanged += EditContextOnOnValidationStateChanged;
+            }
+        }
+    }
+
+    [Parameter]
+    public FieldIdentifier? ValidationFieldIdentifier { get; set; }
+
+    [Parameter]
+    public Expression<Func<object>>? ValidationField { get; set; }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        while (_renderActions.Any())
+        {
+            await _renderActions.Dequeue().Invoke();
+        }
+        await base.OnAfterRenderAsync(firstRender);
+    }
+
+    private void EditContextOnOnValidationStateChanged(object sender, ValidationStateChangedEventArgs e)
+    {
+        _renderActions.Enqueue(async () =>
+        {
+            if (EditContext != null && (ValidationFieldIdentifier != null || ValidationField != null))
+            {
+                var fieldIdentifier = ValidationFieldIdentifier ?? FieldIdentifier.Create(ValidationField);
+                var errors = EditContext.GetValidationMessages(fieldIdentifier).Any();
+                await JsRuntime.InvokeVoidAsync("IonicBridge.executeFunctionByName", element, "classList.toggle", "ion-invalid", errors);
+            }
+        });
+    }
+
+}

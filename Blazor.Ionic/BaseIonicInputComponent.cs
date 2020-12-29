@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.JSInterop;
 
 namespace Blazor.Ionic
@@ -10,6 +12,14 @@ namespace Blazor.Ionic
         where TChangeEventDetail : BaseIonicChangeEventDetail<TInputType>
     {
         private TInputType _value;
+        
+        [CascadingParameter]
+        protected EditContext EditContext { get; set; }
+        [Parameter]
+        public FieldIdentifier? ValidationFieldIdentifier { get; set; }
+
+        [Parameter]
+        public Expression<Func<object>>? ValidationField { get; set; }
 
         [Parameter(CaptureUnmatchedValues = true)]
         public Dictionary<string, object> InputAttributes { get; set; }
@@ -25,6 +35,11 @@ namespace Blazor.Ionic
                 if (Compare(_value, value)) return;
                 SetValue(value);
                 ValueChanged.InvokeAsync(value);
+                if (EditContext != null && (ValidationFieldIdentifier != null || ValidationField!= null))
+                {
+                    var fieldIdentifier = ValidationFieldIdentifier ?? FieldIdentifier.Create(ValidationField);
+                    EditContext.NotifyFieldChanged(fieldIdentifier);
+                }
             }
         }
 

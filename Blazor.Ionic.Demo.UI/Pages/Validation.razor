@@ -1,0 +1,41 @@
+@page "/validation"
+@using System.ComponentModel.DataAnnotations
+@inject UIStateService UIStateService
+<ion-content class="ion-padding">
+    <EditForm EditContext="editContext" OnValidSubmit="OnValidSubmit">
+        <DataAnnotationsValidator></DataAnnotationsValidator>
+        <ion-list>
+            <IonItem ValidationField="() => Username">
+                <ion-label>Username</ion-label>
+                <IonInput @bind-Value="Username"></IonInput>
+            </IonItem>
+            <IonValidationMessage ValidationField="() => Username"></IonValidationMessage>
+        </ion-list>
+        <IonButton type="submit" disabled="@Submitted">Submit</IonButton>
+    </EditForm>
+</ion-content>
+
+<IonToast @bind-Visible="Submitted" message="Form submitted and validated!" duration="4000"></IonToast>
+
+@code {
+
+    public bool Submitted { get; set; }
+    [Required]
+    [MinLength(10)]
+    [MaxLength(15)]
+    public string Username { get; set; }
+
+    EditContext editContext;
+
+    protected override void OnInitialized()
+    {
+        editContext = new EditContext(this);
+        UIStateService.Title = "Validation demo";
+    }
+
+    public void OnValidSubmit()
+    {
+        Submitted = true;
+    }
+
+}

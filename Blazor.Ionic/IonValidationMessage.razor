@@ -1,0 +1,40 @@
+@using Microsoft.AspNetCore.Components.Forms
+@using System.Linq.Expressions
+@* Styling fix for icons next to text from *@
+@* https://github.com/ionic-team/ionic-framework/issues/18033#issuecomment-513384873 *@
+<style>
+    .validation-error-message ion-text ion-icon {
+        vertical-align: middle; 
+        padding-bottom: 3px;
+    }
+</style>
+
+
+@foreach (var error in Errors)
+{
+    <p class="validation-error-message">
+        <ion-text color="danger">
+            <ion-icon color="danger" name="information-circle-outline"></ion-icon>
+            @error
+        </ion-text>
+    </p>
+}
+
+@code {
+
+    public string[] Errors => (ValidationFieldIdentifier != null ?
+        EditContext.GetValidationMessages(ValidationFieldIdentifier.Value) :
+        ValidationField != null ?
+            EditContext.GetValidationMessages(ValidationField) :
+            EditContext.GetValidationMessages()).ToArray();
+
+    [CascadingParameter]
+    protected EditContext EditContext { get; set; }
+
+    [Parameter]
+    public FieldIdentifier? ValidationFieldIdentifier { get; set; }
+
+    [Parameter]
+    public Expression<Func<object>>? ValidationField { get; set; }
+
+}
