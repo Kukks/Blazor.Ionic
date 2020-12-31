@@ -92,6 +92,7 @@ namespace Blazor.Ionic
 
         public virtual void Dispose()
         {
+            JsRuntime.InvokeVoidAsync("IonicBridge.executeFunctionByName", Id, "dismiss");
             ThisRef?.Dispose();
         }
     }
