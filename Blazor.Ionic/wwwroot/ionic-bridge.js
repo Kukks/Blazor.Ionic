@@ -26,7 +26,7 @@ window.IonicBridge = {
                     target = target[part] || part;
                 }
             }
-        } else {
+        } else if (parent != null){
             target = parent[propertyName];
         }
         return {parent, target};
