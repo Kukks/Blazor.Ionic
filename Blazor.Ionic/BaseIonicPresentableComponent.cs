@@ -17,7 +17,7 @@ namespace Blazor.Ionic
             get => _visible;
             set
             {
-                if (_realVisible != value)
+                if (_visible != value &&  _realVisible != value)
                 {
                     _renderActions.Enqueue(async () =>
                     {
