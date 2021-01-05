@@ -19,14 +19,13 @@ namespace Blazor.Ionic
             {
                 if (_realVisible != value)
                 {
-                    if (value)
-                    {
-                        Id = Guid.NewGuid().ToString();
-                        _renderActions.Enqueue(async () => { await CreateElement(); });
-                    }
-
                     _renderActions.Enqueue(async () =>
                     {
+                        if (value)
+                        {
+                            Id = Guid.NewGuid().ToString();
+                            await CreateElement();
+                        }
                         await JsRuntime.InvokeVoidAsync("IonicBridge.executeFunctionByName", Id, value ? "present" : "dismiss");
                     });
                 }
