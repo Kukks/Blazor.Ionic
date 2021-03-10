@@ -1,8 +1,8 @@
 @page "/select"
 <IonContent>
-    <ion-list>
+    <IonList>
         <ion-item>
-            <ion-label>Select control with own child content provided</ion-label>
+            <IonLabel>Select control with own child content provided</IonLabel>
             <IonSelect TItem="string" value="brown" ok-text="Okay" cancel-text="Dismiss">
                 <ion-select-option value="brown">Brown</ion-select-option>
                 <ion-select-option value="blonde">Blonde</ion-select-option>
@@ -12,23 +12,23 @@
         </ion-item>
 
         <ion-item>
-            <ion-label>Select control with C# options provided. Selected value: @SelectedValue</ion-label>
+            <IonLabel>Select control with C# options provided. Selected value: @SelectedValue</IonLabel>
             <IonSelect Options="@Options" @bind-Value="SelectedValue" ok-text="Okay" cancel-text="Dismiss">
             </IonSelect>
         </ion-item>
 
         <ion-item>
-            <ion-label>Select control with C# complex options provided. Selected value: @SelectedComplexValue</ion-label>
+            <IonLabel>Select control with C# complex options provided. Selected value: @SelectedComplexValue</IonLabel>
             <IonSelect Options="@ComplexOptions" @bind-Value="SelectedComplexValue" ok-text="Okay" cancel-text="Dismiss">
             </IonSelect>
         </ion-item>
-        <ion-list-header>
-            <ion-label>
+        <IonListHeader>
+            <IonLabel>
                 MultiSelect
-            </ion-label>
-        </ion-list-header>
+            </IonLabel>
+        </IonListHeader>
         <ion-item>
-            <ion-label>Select control with own child content provided</ion-label>
+            <IonLabel>Select control with own child content provided</IonLabel>
             <IonMultipleSelect TItem="string"  @bind-Value="SelectedValues"  ok-text="Okay" cancel-text="Dismiss">
                 <ion-select-option value="item1">1</ion-select-option>
                 <ion-select-option value="item2">2</ion-select-option>
@@ -36,17 +36,17 @@
             </IonMultipleSelect>
         </ion-item>
          <ion-item>
-            <ion-label>Select control with C# options provided. Selected value: @SelectedValues?.Count()</ion-label>
+            <IonLabel>Select control with C# options provided. Selected value: @SelectedValues?.Count()</IonLabel>
             <IonMultipleSelect Options="@Options" @bind-Value="SelectedValues" ok-text="Okay" cancel-text="Dismiss">
             </IonMultipleSelect>
         </ion-item>
         
                 <ion-item>
-                    <ion-label>Select control with C# complex options provided. Selected value: @SelectedComplexValues?.Count()</ion-label>
+                    <IonLabel>Select control with C# complex options provided. Selected value: @SelectedComplexValues?.Count()</IonLabel>
                     <IonMultipleSelect Options="@ComplexOptions" @bind-Value="SelectedComplexValues" ok-text="Okay" cancel-text="Dismiss">
                     </IonMultipleSelect>
                 </ion-item>
-    </ion-list>
+    </IonList>
 </IonContent>
 
 @code {

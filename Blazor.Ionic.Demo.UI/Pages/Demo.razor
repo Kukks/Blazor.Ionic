@@ -10,28 +10,28 @@
         <IonButton OnClick="TogglePicker" expand="block">Toggle picker (currently @VisiblePicker)</IonButton>
         <IonButton OnClick="ToggleToast" expand="block">Toggle toast (currently @VisibleToast)</IonButton>
         <IonButton OnClick="TogglePopover" expand="block">Toggle popover (currently @VisiblePopover)</IonButton>
-        <ion-list>
+        <IonList>
             @foreach (var log in Logs)
             {
-                <ion-item>
-                    <ion-label>
+                <IonItem>
+                    <IonLabel>
                         @log
-                    </ion-label>
-                </ion-item>
+                    </IonLabel>
+                </IonItem>
             }
-        </ion-list>
+        </IonList>
     </section>
     <IonModal @bind-Visible="@VisibleModal">
-        <ion-header>
-            <ion-toolbar>
-                <ion-title>Modal Header</ion-title>
-                <ion-buttons slot="primary">
-                    <ion-button @onclick="ToggleModal">
-                        <ion-icon slot="icon-only" name="close"></ion-icon>
-                    </ion-button>
-                </ion-buttons>
-            </ion-toolbar>
-        </ion-header>
+        <IonHeader>
+            <IonToolbar>
+                <IonTitle>Modal Header</IonTitle>
+                <IonButtons slot="primary">
+                    <IonButton  OnClick="ToggleModal">
+                        <IonIcon slot="icon-only" name="close"></IonIcon>
+                    </IonButton>
+                </IonButtons>
+            </IonToolbar>
+        </IonHeader>
         <IonContent class="ion-padding">
             Modal Content
 
@@ -39,14 +39,14 @@
     </IonModal>
 
     <IonPopover @bind-Visible="@VisiblePopover">
-        <ion-list>
-            <ion-list-header>Ionic</ion-list-header>
+        <IonList>
+            <IonListHeader>Ionic</IonListHeader>
             <IonItem button>Learn Ionic</IonItem>
             <IonItem button>Documentation </IonItem>
             <IonItem button>Showcase</IonItem>
             <IonItem button>GitHub Repo</IonItem>
             <IonItem lines="none" detail="false" @onclick="TogglePopover" button  >Close</IonItem>
-        </ion-list>
+        </IonList>
     </IonPopover>
     <IonLoading @bind-Visible="@VisibleLoader" message="eeee" backdrop-dismiss="true"></IonLoading>
     <IonAlert @bind-Visible="@VisibleAlert" message="eeee" Buttons="buttons" Inputs="inputs" backdrop-dismiss="true"></IonAlert>

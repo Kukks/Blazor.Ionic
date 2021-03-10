@@ -1,57 +1,57 @@
 ﻿@page "/inputs"
 @inject UIStateService UiStateService
 <IonContent fullscreen>
-    <ion-list lines="full" class="ion-no-margin">
-        <ion-list-header lines="full">
-            <ion-label>
+    <IonList lines="full" class="ion-no-margin">
+        <IonListHeader lines="full">
+            <IonLabel>
                 Label Positions
-            </ion-label>
-        </ion-list-header>
+            </IonLabel>
+        </IonListHeader>
         <IonItem>
-            <ion-label>Default Label @Input1</ion-label>
+            <IonLabel>Default Label @Input1</IonLabel>
             <IonInput placeholder="placeholder" @bind-Value="Input1"></IonInput>
         </IonItem>
         <IonItem>
-            <ion-label position="fixed">Fixed Label</ion-label>
+            <IonLabel position="fixed">Fixed Label</IonLabel>
             <IonInput placeholder="placeholder" @bind-Value="Input1"></IonInput>
         </IonItem>
         <IonItem>
-            <ion-label position="stacked">Stacked Label</ion-label>
+            <IonLabel position="stacked">Stacked Label</IonLabel>
             <IonInput placeholder="placeholder" @bind-Value="Input1"></IonInput>
         </IonItem>
         <IonItem>
-            <ion-label position="floating">Floating Label</ion-label>
+            <IonLabel position="floating">Floating Label</IonLabel>
             <IonInput @bind-Value="Input1"></IonInput>
         </IonItem>
         <IonItem>
             <IonSearchBar placeholder="Search bar" @bind-Value="Input1"></IonSearchBar>
         </IonItem>
-    </ion-list>
+    </IonList>
 
-    <ion-list lines="full" class="ion-no-margin">
-        <ion-list-header lines="full">
-            <ion-label>
+    <IonList lines="full" class="ion-no-margin">
+        <IonListHeader lines="full">
+            <IonLabel>
                 Input Types
-            </ion-label>
-        </ion-list-header>
+            </IonLabel>
+        </IonListHeader>
 
         <IonItem>
-            <ion-label>Text Input</ion-label>
+            <IonLabel>Text Input</IonLabel>
             <IonInput placeholder="placeholder" type="text" @bind-Value="Input1"></IonInput>
         </IonItem>
 
         <IonItem>
-            <ion-label>Number Input @Input2</ion-label>
+            <IonLabel>Number Input @Input2</IonLabel>
             <IonInput placeholder="placeholder" type="number" @bind-Value="Input2"></IonInput>
         </IonItem>
 
         <IonItem>
-            <ion-label>Password Input</ion-label>
+            <IonLabel>Password Input</IonLabel>
             <IonInput TItem="string" placeholder="placeholder" type="password" @bind-Value="Input1"></IonInput>
         </IonItem>
 
         <IonItem>
-            <ion-label position="stacked">Multiple Inputs</ion-label>
+            <IonLabel position="stacked">Multiple Inputs</IonLabel>
             <IonInput TItem="string" placeholder="Address Line 1"></IonInput>
             <IonInput TItem="string" placeholder="Address Line 2"></IonInput>
             <IonInput TItem="string" placeholder="City"></IonInput>
@@ -60,100 +60,100 @@
         </IonItem>
 
         <IonItem>
-            <ion-label position="stacked">Textarea</ion-label>
+            <IonLabel position="stacked">Textarea</IonLabel>
             <IonTextArea placeholder="placeholder"></IonTextArea>
         </IonItem>
 
         <IonItem>
-            <ion-label>Date</ion-label>
+            <IonLabel>Date</IonLabel>
             <IonDateTime display-format="h:mm A" picker-format="h:mm A"></IonDateTime>
         </IonItem>
-    </ion-list>
-    <ion-list>
-        <ion-list-header lines="full">
-            <ion-label>
+    </IonList>
+    <IonList>
+        <IonListHeader lines="full">
+            <IonLabel>
                 Radio groups
-            </ion-label>
-        </ion-list-header>
+            </IonLabel>
+        </IonListHeader>
         <IonRadioGroup @bind-Value="Input3">
-            <ion-list-header>
-                <ion-label>Selected: @Input3</ion-label>
-            </ion-list-header>
+            <IonListHeader>
+                <IonLabel>Selected: @Input3</IonLabel>
+            </IonListHeader>
 
             <IonItem>
-                <ion-label>Biff</ion-label>
-                <ion-radio slot="start" value="biff"></ion-radio>
+                <IonLabel>Biff</IonLabel>
+                <IonRadio slot="start" value="biff"></IonRadio>
             </IonItem>
 
             <IonItem>
-                <ion-label>Griff</ion-label>
-                <ion-radio slot="start" value="griff"></ion-radio>
+                <IonLabel>Griff</IonLabel>
+                <IonRadio slot="start" value="griff"></IonRadio>
             </IonItem>
             <IonItem>
-                <ion-label>Buford</ion-label>
-                <ion-radio slot="start" value="buford"></ion-radio>
+                <IonLabel>Buford</IonLabel>
+                <IonRadio slot="start" value="buford"></IonRadio>
             </IonItem>
         </IonRadioGroup>
-    </ion-list>
-    <ion-list>
-        <ion-list-header lines="full">
-            <ion-label>
+    </IonList>
+    <IonList>
+        <IonListHeader lines="full">
+            <IonLabel>
                 Segments
-            </ion-label>
-        </ion-list-header>
+            </IonLabel>
+        </IonListHeader>
         <IonSegment @bind-Value="Input3">
-            <ion-segment-button value="griff">
-                <ion-label>Griff</ion-label>
-            </ion-segment-button>
-            <ion-segment-button value="buford">
-                <ion-label>Buford</ion-label>
-            </ion-segment-button>
+            <IonSegmentButton value="griff">
+                <IonLabel>Griff</IonLabel>
+            </IonSegmentButton>
+            <IonSegmentButton value="buford">
+                <IonLabel>Buford</IonLabel>
+            </IonSegmentButton>
         </IonSegment>
-    </ion-list>
-    <ion-list>
-        <ion-list-header lines="full">
-            <ion-label>
+    </IonList>
+    <IonList>
+        <IonListHeader lines="full">
+            <IonLabel>
                 Checkboxes
-            </ion-label>
-        </ion-list-header>
+            </IonLabel>
+        </IonListHeader>
 
         <IonItem>
-            <ion-label>Jon Snow checkbox value:  @CheckboxValue</ion-label> 
+            <IonLabel>Jon Snow checkbox value:  @CheckboxValue</IonLabel> 
             <IonCheckbox color="primary" @bind-Value="CheckboxValue" slot="start"></IonCheckbox>
         </IonItem>
-    </ion-list>
-    <ion-list>
-        <ion-list-header lines="full">
-            <ion-label>
+    </IonList>
+    <IonList>
+        <IonListHeader lines="full">
+            <IonLabel>
                 Toggles
-            </ion-label>
-        </ion-list-header>
+            </IonLabel>
+        </IonListHeader>
         <IonItem>
-            <ion-label>Blueberry  @ToggleValue</ion-label>
+            <IonLabel>Blueberry  @ToggleValue</IonLabel>
             <IonToggle slot="start" name="blueberry" @bind-Value="ToggleValue"></IonToggle>
         </IonItem>
-    </ion-list>
-    <ion-list>
-        <ion-list-header lines="full">
-            <ion-label>
+    </IonList>
+    <IonList>
+        <IonListHeader lines="full">
+            <IonLabel>
                 Ranges
-            </ion-label>
-        </ion-list-header>
+            </IonLabel>
+        </IonListHeader>
         <IonItem>
             <IonRange color="danger" pin="true"></IonRange>
         </IonItem>
 
         <IonItem>
             <IonRange min="-200" max="200" color="secondary">
-                <ion-label slot="start">-200</ion-label>
-                <ion-label slot="end">200</ion-label>
+                <IonLabel slot="start">-200</IonLabel>
+                <IonLabel slot="end">200</IonLabel>
             </IonRange>
         </IonItem>
 
         <IonItem>
             <IonRange min="20" max="80" step="2">
-                <ion-icon size="small" slot="start" name="sunny"></ion-icon>
-                <ion-icon slot="end" name="sunny"></ion-icon>
+                <IonIcon size="small" slot="start" name="sunny"></IonIcon>
+                <IonIcon slot="end" name="sunny"></IonIcon>
             </IonRange>
         </IonItem>
 
@@ -168,7 +168,7 @@
         <IonItem>
             <IonDualRange min="21" max="72" step="3" snaps="true"></IonDualRange>
         </IonItem>
-    </ion-list>
+    </IonList>
 
 </IonContent>
 

@@ -2,56 +2,56 @@
 @inject UIStateService UIStateService
 <IonTabs @bind-CurrentTab="CurrentTab">
 
-    <ion-tab tab="music">
-        <ion-header translucent>
-            <ion-toolbar>
-                <ion-title>Music</ion-title>
-            </ion-toolbar>
-        </ion-header>
+    <IonTab tab="music">
+        <IonHeader translucent>
+            <IonToolbar>
+                <IonTitle>Music</IonTitle>
+            </IonToolbar>
+        </IonHeader>
 
         <IonContent fullscreen class="ion-padding">
             <h1>Music</h1>
         </IonContent>
-    </ion-tab>
+    </IonTab >
 
-    <ion-tab tab="movies">
-        <ion-header translucent>
-            <ion-toolbar>
-                <ion-title>Movies</ion-title>
-            </ion-toolbar>
-        </ion-header>
+    <IonTab tab="movies">
+        <IonHeader translucent>
+            <IonToolbar>
+                <IonTitle>Movies</IonTitle>
+            </IonToolbar>
+        </IonHeader>
 
         <IonContent fullscreen class="ion-padding">
             <h1>Movies</h1>
         </IonContent>
-    </ion-tab>
+    </IonTab >
 
-    <ion-tab tab="games">
-        <ion-header translucent>
-            <ion-toolbar>
-                <ion-title>Games</ion-title>
-            </ion-toolbar>
-        </ion-header>
+    <IonTab tab="games">
+        <IonHeader translucent>
+            <IonToolbar>
+                <IonTitle>Games</IonTitle>
+            </IonToolbar>
+        </IonHeader>
 
         <IonContent fullscreen class="ion-padding">
             <h1>Games</h1>
         </IonContent>
-    </ion-tab>
+    </IonTab >
 
-    <ion-tab-bar slot="bottom">
-        <ion-tab-button tab="music">
-            <ion-label>Music</ion-label>
-            <ion-icon name="musical-note"></ion-icon>
-        </ion-tab-button>
-        <ion-tab-button tab="movies">
-            <ion-label>Movies</ion-label>
-            <ion-icon name="videocam"></ion-icon>
-        </ion-tab-button>
-        <ion-tab-button tab="games">
-            <ion-label>Games</ion-label>
-            <ion-icon name="game-controller"></ion-icon>
-        </ion-tab-button>
-    </ion-tab-bar>
+    <IonTabBar slot="bottom">
+        <IonTabButton tab="music">
+            <IonLabel>Music</IonLabel>
+            <IonIcon name="musical-note"></IonIcon>
+        </IonTabButton>
+        <IonTabButton tab="movies">
+            <IonLabel>Movies</IonLabel>
+            <IonIcon name="videocam"></IonIcon>
+        </IonTabButton>
+        <IonTabButton tab="games">
+            <IonLabel>Games</IonLabel>
+            <IonIcon name="game-controller"></IonIcon>
+        </IonTabButton>
+    </IonTabBar>
 </IonTabs>
 
 @code {

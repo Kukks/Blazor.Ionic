@@ -4,13 +4,13 @@
 <IonContent class="ion-padding">
     <EditForm EditContext="editContext" OnValidSubmit="OnValidSubmit">
         <DataAnnotationsValidator></DataAnnotationsValidator>
-        <ion-list>
+        <IonList>
             <IonItem ValidationField="() => Username">
-                <ion-label>Username</ion-label>
+                <IonLabel>Username</IonLabel>
                 <IonInput @bind-Value="Username"></IonInput>
             </IonItem>
             <IonValidationMessage ValidationField="() => Username"></IonValidationMessage>
-        </ion-list>
+        </IonList>
         <IonButton type="submit" disabled="@Submitted">Submit</IonButton>
     </EditForm>
 </IonContent>
