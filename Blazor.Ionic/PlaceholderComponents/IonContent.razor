@@ -1,4 +1,4 @@
-@code {
-    protected override string ElementName => "ion-content";
-}
-@inherits BaseIonicPlaceholderComponent
+@inherits BaseIonicComponent
+@namespace Blazor.Ionic;
+
+<ion-content @attributes="InputAttributes" @ref="Element">@ChildContent</ion-content>

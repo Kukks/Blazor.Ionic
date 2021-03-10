@@ -1,7 +1,7 @@
 ﻿@page "/demo"
 @inject UIStateService UiStateService
 
-<ion-content class="ion-padding">
+<IonContent class="ion-padding">
     <section>
         <IonButton OnClick="ToggleLoader" expand="block">Toggle loader (currently @VisibleLoader)</IonButton>
         <IonButton OnClick="ToggleAlert" expand="block">Toggle alert (currently @VisibleAlert)</IonButton>
@@ -32,10 +32,10 @@
                 </ion-buttons>
             </ion-toolbar>
         </ion-header>
-        <ion-content class="ion-padding">
+        <IonContent class="ion-padding">
             Modal Content
 
-        </ion-content>
+        </IonContent>
     </IonModal>
 
     <IonPopover @bind-Visible="@VisiblePopover">
@@ -53,7 +53,7 @@
     <IonActionSheet @bind-Visible="@VisibleActionSheet" Buttons="actionSheetButtons" header="An action sheet!"></IonActionSheet>
     <IonPicker @bind-Visible="@VisiblePicker" Buttons="pickerButtons" Columns="pickerColumns"></IonPicker>
     <IonToast @bind-Visible="@VisibleToast" Buttons="toastButtons"></IonToast>
-</ion-content>
+</IonContent>
 
 @code {
 

@@ -1,7 +1,7 @@
 @page "/validation"
 @using System.ComponentModel.DataAnnotations
 @inject UIStateService UIStateService
-<ion-content class="ion-padding">
+<IonContent class="ion-padding">
     <EditForm EditContext="editContext" OnValidSubmit="OnValidSubmit">
         <DataAnnotationsValidator></DataAnnotationsValidator>
         <ion-list>
@@ -13,7 +13,7 @@
         </ion-list>
         <IonButton type="submit" disabled="@Submitted">Submit</IonButton>
     </EditForm>
-</ion-content>
+</IonContent>
 
 <IonToast @bind-Visible="Submitted" message="Form submitted and validated!"></IonToast>
 
