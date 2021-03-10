@@ -2,7 +2,7 @@
 @using System.Text.Json.Serialization
 @typeparam TItem
 @inherits BaseIonicInputComponent<TItem, IonInput<TItem>.InputChangeEventDetail>
-
+@namespace Blazor.Ionic
 <ion-input value="@Value" @attributes="InputAttributes" @ref=Element>@ChildContent</ion-input>
 
 @code {

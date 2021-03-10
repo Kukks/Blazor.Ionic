@@ -1,6 +1,6 @@
 @using System.Text.Json.Serialization
 @inherits BaseIonicInputComponent<IonDualRange.RangeDualValue, IonDualRange.InputChangeEventDetail>
-
+@namespace Blazor.Ionic
 <ion-range dual-knobs="true" value="@Value" @attributes="InputAttributes" @ref="Element">@ChildContent</ion-range>
 
 @code {

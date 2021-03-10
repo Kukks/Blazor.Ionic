@@ -1,6 +1,6 @@
 @using System.Text.Json.Serialization
 @using Microsoft.JSInterop
-@using System.Text.Json
+@namespace Blazor.Ionic
 @inherits BaseIonicPresentableComponent<object, Blazor.Ionic.Models.OverlayEventDetail<Blazor.Ionic.Models.IonicComponentDismissPayloadData>>
 
 @code {
@@ -9,10 +9,7 @@
     public Dictionary<string, object> InputAttributes { get; set; }
 
     [Parameter]
-    public IEnumerable<IonPickerButton> Buttons { get; set; }
-
-    [Parameter]
-    public IEnumerable<IonPickerColumn> Columns { get; set; }
+    public IEnumerable<IonActionSheetButton> Buttons { get; set; }
 
     protected override async Task CreateElement()
     {
@@ -21,11 +18,7 @@
         {
             data.Add("buttons", Buttons);
         }
-        if (Columns?.Any() is true)
-        {
-            data.Add("columns", Columns);
-        }
-        await JsRuntime.InvokeVoidAsync("IonicBridge.createElement", "ion-picker", Id, InputAttributes, data);
+        await JsRuntime.InvokeVoidAsync("IonicBridge.createElement", "ion-action-sheet", Id, InputAttributes, data);
         if (Buttons?.Any() is true)
         {
             for (int i = 0; i < Buttons.Count(); i++)
@@ -36,40 +29,30 @@
                 }
             }
         }
-        await JsRuntime.InvokeVoidAsync("IonicBridge.registerBlazorCustomHandler", Id, "ionPickerDidDismiss", ThisRef, nameof(HandleDismissed));
-        await JsRuntime.InvokeVoidAsync("IonicBridge.registerBlazorCustomHandler", Id, "ionPickerDidPresent", ThisRef, nameof(HandlePresented));
+        await JsRuntime.InvokeVoidAsync("IonicBridge.registerBlazorCustomHandler", Id, "ionActionSheetDidDismiss", ThisRef, nameof(HandleDismissed));
+        await JsRuntime.InvokeVoidAsync("IonicBridge.registerBlazorCustomHandler", Id, "ionActionSheetDidPresent", ThisRef, nameof(HandlePresented));
     }
 
     [JSInvokable(nameof(HandleButton))]
-    public Task HandleButton(IonPickerButtonHandlerData data, int id)
+    public Task HandleButton(IonActionSheetButtonHandlerData data, int id)
     {
-        if (data?.Options?.ContainsKey("0") is true)
-        {
-            data = JsonSerializer.Deserialize<IonPickerButtonHandlerData>(((JsonElement) data.Options["0"]).GetRawText());
-        }
         return Buttons.ElementAt(id).Handler(data);
     }
 
 
-    public class IonPickerButtonHandlerData
+    public class IonActionSheetButtonHandlerData
     {
         [JsonExtensionData]
         public Dictionary<string, object> Options { get; set; } = new Dictionary<string, object>();
     }
 
-    public class IonPickerButton
+    public class IonActionSheetButton
     {
         [JsonExtensionData]
         public Dictionary<string, object> Options { get; set; } = new Dictionary<string, object>();
 
         [JsonIgnore]
-        public Func<IonPickerButtonHandlerData, Task> Handler { get; set; }
-    }
-
-    public class IonPickerColumn
-    {
-        [JsonExtensionData]
-        public Dictionary<string, object> Options { get; set; } = new Dictionary<string, object>();
+        public Func<IonActionSheetButtonHandlerData, Task> Handler { get; set; }
     }
 
 }

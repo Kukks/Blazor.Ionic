@@ -1,5 +1,5 @@
 @using System.Text.Json.Serialization
-@using System.Text.Json
+@namespace Blazor.Ionic
 @inherits BaseIonicInputComponent<TItem, IonSelect<TItem>.InputChangeEventDetail>
 @typeparam TItem
 <ion-select multiple="false" value="@GetOptionIdentifier(Value)" @attributes="InputAttributes" @ref="Element">

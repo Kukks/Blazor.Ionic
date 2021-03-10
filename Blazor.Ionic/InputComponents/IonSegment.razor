@@ -1,7 +1,7 @@
 @using System.Text.Json.Serialization
-@inherits BaseIonicInputComponent<string, IonRadioGroup.InputChangeEventDetail>
-
-<ion-radio-group value="@Value" @attributes="InputAttributes" @ref="Element">@ChildContent</ion-radio-group>
+@inherits BaseIonicInputComponent<string, IonSegment.InputChangeEventDetail>
+@namespace Blazor.Ionic
+<ion-segment value="@Value" @attributes="InputAttributes" @ref="Element">@ChildContent</ion-segment>
 
 @code {
     

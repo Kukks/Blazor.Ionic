@@ -1,7 +1,7 @@
 @using System.Text.Json.Serialization
-@inherits BaseIonicInputComponent<bool, IonCheckbox.InputChangeEventDetail>
-
-<ion-checkbox checked="@Value" value="@NativeValue"@attributes="InputAttributes" @ref="Element">@ChildContent</ion-checkbox>
+@inherits BaseIonicInputComponent<bool, IonToggle.InputChangeEventDetail>
+@namespace Blazor.Ionic
+<ion-toggle checked="@Value" value="@NativeValue"@attributes="InputAttributes" @ref="Element">@ChildContent</ion-toggle>
 
 @code {
 
