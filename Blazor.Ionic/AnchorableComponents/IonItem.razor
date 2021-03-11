@@ -39,7 +39,7 @@
     public FieldIdentifier? ValidationFieldIdentifier { get; set; }
 
     [Parameter]
-    public Expression<Func<object>>? ValidationField { get; set; }
+    public Expression<Func<object>> ValidationField { get; set; }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {

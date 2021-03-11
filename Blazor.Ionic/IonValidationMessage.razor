@@ -1,3 +1,4 @@
+#nullable enable
 @using Microsoft.AspNetCore.Components.Forms
 @using System.Linq.Expressions
 @* Styling fix for icons next to text from *@
@@ -35,6 +36,6 @@
     public FieldIdentifier? ValidationFieldIdentifier { get; set; }
 
     [Parameter]
-    public Expression<Func<object>>? ValidationField { get; set; }
+    public Expression<Func<object>> ValidationField { get; set; }
 
 }

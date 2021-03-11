@@ -1,3 +1,4 @@
+
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
@@ -19,7 +20,7 @@ namespace Blazor.Ionic
         public FieldIdentifier? ValidationFieldIdentifier { get; set; }
 
         [Parameter]
-        public Expression<Func<object>>? ValidationField { get; set; }
+        public Expression<Func<object>> ValidationField { get; set; }
 
         [Parameter(CaptureUnmatchedValues = true)]
         public Dictionary<string, object> InputAttributes { get; set; }
