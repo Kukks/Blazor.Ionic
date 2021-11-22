@@ -18,9 +18,11 @@ namespace Blazor.Ionic
         public EditContext EditContext { get; set; }
         
         [CascadingParameter(Name = nameof(ValidationFieldIdentifier))]
+        [Parameter]
         public FieldIdentifier? ValidationFieldIdentifier { get; set; }
         
         [CascadingParameter(Name = nameof(ValidationField))]
+        [Parameter]
         public Expression<Func<object>> ValidationField { get; set; }
 
         [Parameter(CaptureUnmatchedValues = true)]
