@@ -43,9 +43,11 @@
     }
 
     [Parameter]
+    [CascadingParameter(Name = nameof(ValidationFieldIdentifier))]
     public FieldIdentifier? ValidationFieldIdentifier { get; set; }
 
     [Parameter]
+    [CascadingParameter(Name = nameof(ValidationField))]
     public Expression<Func<object>> ValidationField { get; set; }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
