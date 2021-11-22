@@ -6,9 +6,15 @@
 @inject IJSRuntime JsRuntime
 <ion-item
     @ref="element"
-     @attributes="InputAttributes"
-     @onclick='OnClickCallback' @onclick:preventDefault="@ShouldInterceptHref">
-    @ChildContent
+    @attributes="InputAttributes"
+    @onclick='OnClickCallback' @onclick:preventDefault="@ShouldInterceptHref">
+    <CascadingValue Name="@nameof(ValidationField)" Value="ValidationField">
+        <CascadingValue Name="@nameof(ValidationFieldIdentifier)" Value="ValidationFieldIdentifier">
+            <CascadingValue Value="EditContext">
+                @ChildContent
+            </CascadingValue>
+        </CascadingValue>
+    </CascadingValue>
 </ion-item>
 
 @code
@@ -18,6 +24,7 @@
     private EditContext _editContext;
 
     [CascadingParameter]
+    [Parameter]
     protected EditContext EditContext
     {
         get => _editContext;

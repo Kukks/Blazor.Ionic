@@ -1,4 +1,3 @@
-
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
@@ -15,11 +14,13 @@ namespace Blazor.Ionic
         private TInputType _value;
         
         [CascadingParameter]
+        [Parameter]
         protected EditContext EditContext { get; set; }
-        [Parameter]
+        
+        [CascadingParameter(Name = nameof(ValidationFieldIdentifier))]
         public FieldIdentifier? ValidationFieldIdentifier { get; set; }
-
-        [Parameter]
+        
+        [CascadingParameter(Name = nameof(ValidationField))]
         public Expression<Func<object>> ValidationField { get; set; }
 
         [Parameter(CaptureUnmatchedValues = true)]
