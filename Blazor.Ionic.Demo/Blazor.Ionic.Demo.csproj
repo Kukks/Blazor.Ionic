@@ -22,7 +22,7 @@
 
     <ItemGroup Condition="'$(Configuration)' != 'Release' ">
         <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="3.1.21" />
-        <PackageReference Include="LiveSharp" Version="1.6.45-beta" />
+        <PackageReference Include="LiveSharp" Version="2.0.20" />
     </ItemGroup>
     <PropertyGroup>
         <!-- File with mtime of last successful npm install -->

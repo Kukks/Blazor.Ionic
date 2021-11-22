@@ -29,7 +29,7 @@
 
     <ItemGroup Condition="'$(Configuration)' != 'Release' ">
         <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="3.1.8" />
-        <PackageReference Include="LiveSharp" Version="1.6.45-beta" />
+        <PackageReference Include="LiveSharp" Version="2.0.20" />
     </ItemGroup>
 
 </Project>
