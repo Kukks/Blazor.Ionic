@@ -15,7 +15,7 @@ namespace Blazor.Ionic
         
         [CascadingParameter]
         [Parameter]
-        protected EditContext EditContext { get; set; }
+        public EditContext EditContext { get; set; }
         
         [CascadingParameter(Name = nameof(ValidationFieldIdentifier))]
         public FieldIdentifier? ValidationFieldIdentifier { get; set; }
