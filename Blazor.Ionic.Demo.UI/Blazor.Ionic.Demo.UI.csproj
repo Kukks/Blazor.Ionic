@@ -12,8 +12,8 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Microsoft.AspNetCore.Components" Version="3.1.8" />
-        <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="3.1.8" />
+        <PackageReference Include="Microsoft.AspNetCore.Components" Version="3.1.21" />
+        <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="3.1.21" />
     </ItemGroup>
 
     <ItemGroup>
@@ -24,8 +24,8 @@
     </PropertyGroup>
 
     <ItemGroup Condition="'$(Configuration)' != 'Release' ">
-        <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="3.1.8" />
-        <PackageReference Include="LiveSharp" Version="1.6.45-beta" />
+        <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="3.1.21" />
+        <PackageReference Include="LiveSharp" Version="2.0.20" />
     </ItemGroup>
 
 </Project>
