@@ -30,7 +30,9 @@ jobs:
           find: <base href="/" />
           replace: <base href="/Blazor.Ionic/"/>
           include: index.html
-          
+      - name: Add .nojekyll file
+        if: ${{ github.ref == 'refs/heads/master' }} # Publish only when the push is on master
+        run: touch Blazor.Ionic.Demo/bin/Release/net6.0/publish/wwwroot/.nojekyll
       - name: Add 404 spa fix for github pages
         if: ${{ github.ref == 'refs/heads/master' }} # Publish only when the push is on master
         uses: finnp/create-file-action@master
