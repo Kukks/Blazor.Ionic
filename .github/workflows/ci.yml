@@ -27,7 +27,7 @@ jobs:
         if: ${{ github.ref == 'refs/heads/master' }} # Publish only when the push is on master
         uses: jacobtomlinson/gha-find-replace@master
         with:
-          find: <base href="/" />
+          find: <base href="/">
           replace: <base href="/Blazor.Ionic/"/>
           include: index.html
       - name: Add .nojekyll file
