@@ -23,13 +23,12 @@ jobs:
         run: dotnet publish Blazor.Ionic.Demo/Blazor.Ionic.Demo.csproj --configuration Release
 
       # Edit the index.html file
-      - name: Update index.html
-        if: ${{ github.ref == 'refs/heads/master' }} # Publish only when the push is on master
-        uses: jacobtomlinson/gha-find-replace@master
+      - name: Rewrite base href
+        if: success()
+        uses: SteveSandersonMS/ghaction-rewrite-base-href@v1
         with:
-          find: <base href="/">
-          replace: <base href="/Blazor.Ionic/"/>
-          include: index.html
+          html_path: Blazor.Ionic.Demo/bin/Release/net6.0/publish/wwwroot/index.html
+          base_href: Blazor.Ionic
       - name: Add .nojekyll file
         if: ${{ github.ref == 'refs/heads/master' }} # Publish only when the push is on master
         run: touch Blazor.Ionic.Demo/bin/Release/net6.0/publish/wwwroot/.nojekyll
