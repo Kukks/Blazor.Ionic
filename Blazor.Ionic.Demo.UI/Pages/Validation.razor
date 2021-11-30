@@ -8,11 +8,14 @@
             <IonItem ValidationField="() => Username">
                 <IonLabel>Username</IonLabel>
                 <IonInput @bind-Value="Username"></IonInput>
+                
+            <IonValidationMessage ValidationField="() => Username"> ></IonValidationMessage>
             </IonItem>
             <IonValidationMessage ValidationField="() => Username"></IonValidationMessage>
         </IonList>
         <IonButton type="submit" disabled="@Submitted">Submit</IonButton>
     </EditForm>
+    <IonNote>@Username</IonNote>
 </IonContent>
 
 <IonToast @bind-Visible="Submitted" message="Form submitted and validated!"></IonToast>
@@ -30,7 +33,15 @@
     protected override void OnInitialized()
     {
         editContext = new EditContext(this);
-        UIStateService.Title = "Validation demo";
+    }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if (firstRender)
+        {
+            UIStateService.Title = "Validation demo";
+        }
+        base.OnAfterRender(firstRender);
     }
 
     public void OnValidSubmit()

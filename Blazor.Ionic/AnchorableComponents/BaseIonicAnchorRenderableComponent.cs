@@ -5,14 +5,9 @@ using Microsoft.AspNetCore.Components.Web;
 
 namespace Blazor.Ionic
 {
-    public class BaseIonicAnchorRenderableComponent : ComponentBase
+    public class BaseIonicAnchorRenderableComponent : BaseIonicComponent
     {
         [Inject] protected NavigationManager NavigationManager { get; set; }
-
-        [Parameter] public RenderFragment ChildContent { get; set; }
-
-        [Parameter(CaptureUnmatchedValues = true)]
-        public Dictionary<string, object> InputAttributes { get; set; }
 
         [Parameter] public EventCallback<MouseEventArgs> OnClick { get; set; }
 

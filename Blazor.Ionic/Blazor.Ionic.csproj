@@ -13,9 +13,9 @@
 </Description>
         <PackageProjectUrl>https://github.com/Kukks/Blazor.Ionic</PackageProjectUrl>
         <PackageLicenseUrl>https://raw.githubusercontent.com/Kukks/Blazor.Ionic/master/LICENSE</PackageLicenseUrl>
-        <PackageVersion>1.0.18</PackageVersion>
+        <PackageVersion>1.0.19</PackageVersion>
         <LangVersion>latest</LangVersion>
-        <TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>
+        <TargetFrameworks>net5.0;net6.0;netstandard2.0;netstandard2.1</TargetFrameworks>
     </PropertyGroup>
 
 
@@ -28,8 +28,8 @@
     </PropertyGroup>
 
     <ItemGroup Condition="'$(Configuration)' != 'Release' ">
-        <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="3.1.8" />
-        <PackageReference Include="LiveSharp" Version="2.0.20" />
+        <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="3.1.21" />
+        <PackageReference Include="LiveSharp" Version="2.0.24" />
     </ItemGroup>
 
 </Project>

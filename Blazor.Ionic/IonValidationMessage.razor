@@ -1,5 +1,6 @@
 @using Microsoft.AspNetCore.Components.Forms
 @using System.Linq.Expressions
+@inherits BaseIonicValidationComponent
 @* Styling fix for icons next to text from *@
 @* https://github.com/ionic-team/ionic-framework/issues/18033#issuecomment-513384873 *@
 <style>
@@ -8,36 +9,46 @@
         padding-bottom: 3px;
     }
 </style>
-
-
-@foreach (var error in Errors)
+@if (Errors != null)
 {
-    <p class="validation-error-message">
-        <IonText color="danger">
-            <IonIcon color="danger" name="information-circle-outline"></IonIcon>
-            @error
-        </IonText>
-    </p>
+    foreach (var error in Errors)
+    {
+        <p class="validation-error-message">
+            <IonText color="danger">
+                <IonIcon color="danger" name="information-circle-outline"></IonIcon>
+                @error
+            </IonText>
+        </p>
+    }
 }
-
 @code {
+    public string[] Errors;
 
-    public string[] Errors => (ValidationFieldIdentifier != null ?
-        EditContext.GetValidationMessages(ValidationFieldIdentifier.Value) :
-        ValidationField != null ?
-            EditContext.GetValidationMessages(ValidationField) :
-            EditContext.GetValidationMessages()).ToArray();
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        if (EditContext != null)
+        {
+            EditContext.OnValidationStateChanged += EditContextOnOnValidationStateChanged;
+        }
+        EditContextChanging = newEditContext =>
+        {
+            if (EditContext == newEditContext)
+            {
+                return;
+            }
+            if(EditContext != null)
+                EditContext.OnValidationStateChanged -= EditContextOnOnValidationStateChanged;
+            if (newEditContext != null)
+            {
+                newEditContext.OnValidationStateChanged += EditContextOnOnValidationStateChanged;
+            }
+        };
+    }
 
-    [CascadingParameter]
-    [Parameter]
-    public EditContext EditContext { get; set; }
-
-    [CascadingParameter(Name = nameof(ValidationFieldIdentifier))]
-    [Parameter]
-    public FieldIdentifier? ValidationFieldIdentifier { get; set; }
-
-    [CascadingParameter(Name = nameof(ValidationField))]
-    [Parameter]
-    public Expression<Func<object>> ValidationField { get; set; }
+    private void EditContextOnOnValidationStateChanged(object sender, ValidationStateChangedEventArgs e)
+    {
+        Errors = GetValidationMessages();
+    }
 
 }

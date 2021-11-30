@@ -1,67 +1,43 @@
+#nullable enable
 using System;
-using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.JSInterop;
 
 namespace Blazor.Ionic
 {
-    public abstract class BaseIonicInputComponent<TInputType, TChangeEventDetail> : ComponentBase, IDisposable
+    public abstract class BaseIonicInputComponent<TInputType, TChangeEventDetail> : BaseIonicValidationComponent, IDisposable
         where TChangeEventDetail : BaseIonicChangeEventDetail<TInputType>
     {
-        private TInputType _value;
-        
-        [CascadingParameter]
-        [Parameter]
-        public EditContext EditContext { get; set; }
-        
-        [CascadingParameter(Name = nameof(ValidationFieldIdentifier))]
-        [Parameter]
-        public FieldIdentifier? ValidationFieldIdentifier { get; set; }
-        
-        [CascadingParameter(Name = nameof(ValidationField))]
-        [Parameter]
-        public Expression<Func<object>> ValidationField { get; set; }
-
-        [Parameter(CaptureUnmatchedValues = true)]
-        public Dictionary<string, object> InputAttributes { get; set; }
-
-        [Parameter] public RenderFragment ChildContent { get; set; }
+        private TInputType? _value;
 
         [Parameter]
-        public TInputType Value
+        public TInputType? Value
         {
             get => _value;
             set
             {
                 if (Compare(_value, value)) return;
                 SetValue(value);
-                ValueChanged.InvokeAsync(value);
-                if (EditContext != null && (ValidationFieldIdentifier != null || ValidationField!= null))
-                {
-                    var fieldIdentifier = ValidationFieldIdentifier ?? FieldIdentifier.Create(ValidationField);
-                    EditContext.NotifyFieldChanged(fieldIdentifier);
-                }
+                ValueChanged.InvokeAsync(value).ContinueWith(task => NotifyFieldChanged());
+
             }
         }
 
-        protected virtual void SetValue(TInputType value)
+        protected virtual void SetValue(TInputType? value)
         {
             _value = value;   
         }
 
-        protected virtual bool Compare(TInputType item1, TInputType item2)
+        protected virtual bool Compare(TInputType? item1, TInputType? item2)
         {
             return Equals(item1, item2);
         }
 
-        [Parameter] public EventCallback<TInputType> ValueChanged { get; set; }
+        [Parameter] public EventCallback<TInputType?> ValueChanged { get; set; }
 
-        [Inject] protected IJSRuntime JsRuntime { get; set; }
-        protected DotNetObjectReference<BaseIonicInputComponent<TInputType, TChangeEventDetail>> ThisRef { get; set; }
-        protected ElementReference Element;
+        [Inject] protected IJSRuntime JsRuntime { get; set; } = null!;
+        protected DotNetObjectReference<BaseIonicInputComponent<TInputType, TChangeEventDetail>> ThisRef { get; set; } = null!;
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
@@ -83,7 +59,8 @@ namespace Blazor.Ionic
 
         protected virtual Task HandleChangeCore(TChangeEventDetail detail)
         {
-            Value = detail.GetValue();
+            var newV = detail.GetValue();
+            Value = newV;
             return Task.CompletedTask;
         }
 

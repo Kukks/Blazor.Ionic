@@ -3,52 +3,42 @@
 @using System.Linq.Expressions
 @namespace Blazor.Ionic
 @inherits BaseIonicAnchorRenderableComponent
-@inject IJSRuntime JsRuntime
+@implements IBaseIonicValidationComponent
+@inject IJSRuntime _jsRuntime
 <ion-item
-    @ref="element"
+    @ref="_element"
     @attributes="InputAttributes"
     @onclick='OnClickCallback' @onclick:preventDefault="@ShouldInterceptHref">
-    <CascadingValue Name="@nameof(ValidationField)" Value="ValidationField">
-        <CascadingValue Name="@nameof(ValidationFieldIdentifier)" Value="ValidationFieldIdentifier">
-            <CascadingValue Value="EditContext">
-                @ChildContent
-            </CascadingValue>
-        </CascadingValue>
-    </CascadingValue>
+        @ChildContent
 </ion-item>
 
 @code
 {
     private readonly Queue<Func<Task>> _renderActions = new Queue<Func<Task>>();
-    private ElementReference element;
-    private EditContext _editContext;
+    private ElementReference _element;
 
-    [CascadingParameter]
-    [Parameter]
-    public EditContext EditContext
+
+    protected override void OnInitialized()
     {
-        get => _editContext;
-        set
+        base.OnInitialized();
+        if (EditContext != null)
         {
-            if (_editContext != null)
-            {
-                _editContext.OnValidationStateChanged -= EditContextOnOnValidationStateChanged;
-            }
-            _editContext = value;
-            if (_editContext != null)
-            {
-                _editContext.OnValidationStateChanged += EditContextOnOnValidationStateChanged;
-            }
+            EditContext.OnValidationStateChanged += EditContextOnOnValidationStateChanged;
         }
+        EditContextChanging = newEditContext =>
+        {
+            if (EditContext == newEditContext)
+            {
+                return;
+            }
+            if (EditContext != null)
+                EditContext.OnValidationStateChanged -= EditContextOnOnValidationStateChanged;
+            if (newEditContext != null)
+            {
+                newEditContext.OnValidationStateChanged += EditContextOnOnValidationStateChanged;
+            }
+        };
     }
-
-    [Parameter]
-    [CascadingParameter(Name = nameof(ValidationFieldIdentifier))]
-    public FieldIdentifier? ValidationFieldIdentifier { get; set; }
-
-    [Parameter]
-    [CascadingParameter(Name = nameof(ValidationField))]
-    public Expression<Func<object>> ValidationField { get; set; }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
@@ -63,13 +53,77 @@
     {
         _renderActions.Enqueue(async () =>
         {
-            if (EditContext != null && (ValidationFieldIdentifier != null || ValidationField != null))
-            {
-                var fieldIdentifier = ValidationFieldIdentifier ?? FieldIdentifier.Create(ValidationField);
-                var errors = EditContext.GetValidationMessages(fieldIdentifier).Any();
-                await JsRuntime.InvokeVoidAsync("IonicBridge.executeFunctionByName", element, "classList.toggle", "ion-invalid", errors);
-            }
+            var errors = GetValidationMessages()?.Any() is true;
+            await _jsRuntime.InvokeVoidAsync("IonicBridge.executeFunctionByName", _element, "classList.toggle", "ion-invalid", errors);
         });
+    }
+
+    private EditContext _editContext;
+
+    protected Action<EditContext> EditContextChanging;
+    private FieldIdentifier? _validationFieldIdentifier;
+    private Expression<Func<object>> _validationField;
+    private EditContext _cascadingEditContext;
+
+    [Parameter]
+    public EditContext EditContext
+    {
+        get => _editContext ?? CascadingEditContext;
+        set
+        {
+            EditContextChanging?.Invoke(value);
+            _editContext = value;
+        }
+    }
+
+    [CascadingParameter]
+    public EditContext CascadingEditContext
+    {
+        get => _cascadingEditContext;
+        set
+        {
+            EditContextChanging?.Invoke(value);
+            _cascadingEditContext = value;
+        }
+    }
+
+    [Parameter]
+    public FieldIdentifier? ValidationFieldIdentifier
+    {
+        get => _validationFieldIdentifier ?? CascadingValidationFieldIdentifier ??
+               (ValidationField is null ? null : FieldIdentifier.Create(ValidationField));
+        set => _validationFieldIdentifier = value;
+    }
+
+    [CascadingParameter(Name = nameof(ValidationFieldIdentifier))]
+    public FieldIdentifier? CascadingValidationFieldIdentifier { get; set; }
+
+    [Parameter]
+    public Expression<Func<object>> ValidationField
+    {
+        get => _validationField ?? CascadingValidationField;
+        set => _validationField = value;
+    }
+
+    [CascadingParameter(Name = nameof(ValidationField))]
+    public Expression<Func<object>> CascadingValidationField { get; set; }
+
+    public void NotifyFieldChanged()
+    {
+        if (EditContext != null && ValidationFieldIdentifier != null)
+        {
+            EditContext.NotifyFieldChanged(ValidationFieldIdentifier.Value);
+        }
+    }
+
+    public string[] GetValidationMessages()
+    {
+        if (EditContext != null && ValidationFieldIdentifier != null)
+        {
+            return EditContext.GetValidationMessages(ValidationFieldIdentifier.Value)?.ToArray();
+        }
+
+        return null;
     }
 
 }

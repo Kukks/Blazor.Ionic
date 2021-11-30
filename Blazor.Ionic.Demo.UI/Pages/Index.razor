@@ -8,10 +8,13 @@
 
 @code{
 
-    protected override void OnInitialized()
+    protected override void OnAfterRender(bool firstRender)
     {
-        base.OnInitialized();
-        UIStateService.Title = "Home";
+        if (firstRender)
+        {
+            UIStateService.Title = "Home";
+        }
+        base.OnAfterRender(firstRender);
     }
 
 }

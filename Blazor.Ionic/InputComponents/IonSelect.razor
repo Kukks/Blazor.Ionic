@@ -38,7 +38,7 @@
     [Parameter]
     public Func<TItem, string> GetOptionText { get; set; } = (arg1) => arg1?.ToString();
 
-    protected override bool Compare(TItem item1, TItem item2)
+    protected override bool Compare(TItem? item1, TItem? item2)
     {
         return GetOptionIdentifier(item1) == GetOptionIdentifier(item2);
     }
