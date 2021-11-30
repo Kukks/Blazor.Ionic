@@ -50,12 +50,12 @@ jobs:
           force_orphan: true
       - name: Publish NuGet
         if: ${{ github.ref == 'refs/heads/master' }} # Publish only when the push is on master
-        uses: brandedoutcast/publish-nuget@v2.5.5
+        uses: Rebel028/publish-nuget@v2.6.3
         with:
           PROJECT_FILE_PATH: Blazor.Ionic/Blazor.Ionic.csproj
           NUGET_KEY: ${{secrets.NUGET_KEY}}
           PACKAGE_NAME: BlazorIonic
-          INCLUDE_SYMBOLS: true
+          INCLUDE_SYMBOLS: false
           VERSION_REGEX: ^\s*<PackageVersion>(.*)<\/PackageVersion>\s*$
       - name: Publish Github Package Registry
         if: ${{ github.ref == 'refs/heads/master' }} # Publish only when the push is on master
