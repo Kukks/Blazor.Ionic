@@ -1,4 +1,17 @@
 @inherits BaseIonicComponent
 @namespace Blazor.Ionic
 
-<ion-split-pane @attributes="InputAttributes" @ref="Element">@ChildContent</ion-split-pane>
+@if (ApplyStyleFix)
+{
+    <style> 
+        ion-split-pane[scope="@Scope"]:not(.split-pane-visible) { display: block !important; }
+    </style>
+}
+
+<ion-split-pane scope="@Scope" @attributes="InputAttributes" @ref="Element">@ChildContent</ion-split-pane>
+@code{
+    public string Scope { get; set; } = Guid.NewGuid().ToString();
+    [Parameter]
+    public bool ApplyStyleFix { get; set; } = true;
+
+}
