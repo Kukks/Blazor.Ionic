@@ -44,7 +44,7 @@ jobs:
         with:
           github_token: ${{ secrets.GH_TOKEN }}
           publish_branch: gh-pages
-          publish_dir: Blazor.Ionic.Demo/bin/Release/netstandard2.1/publish/wwwroot
+          publish_dir: Blazor.Ionic.Demo/bin/Release/net6.0/publish/wwwroot
           allow_empty_commit: false
           keep_files: false
           force_orphan: true
