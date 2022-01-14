@@ -27,4 +27,11 @@
         await JsRuntime.InvokeVoidAsync("IonicBridge.registerBlazorCustomHandler", Id, "ionModalDidDismiss", ThisRef, nameof(HandleDismissed));
         await JsRuntime.InvokeVoidAsync("IonicBridge.registerBlazorCustomHandler", Id, "ionModalDidPresent", ThisRef, nameof(HandlePresented));
     }
+
+    public override async ValueTask DisposeAsync()
+    {
+        await JsRuntime.InvokeVoidAsync("IonicBridge.removeremoveremove", modalContent);
+        await base.DisposeAsync();
+    }
+
 }

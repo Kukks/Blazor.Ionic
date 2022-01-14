@@ -7,7 +7,8 @@ using Microsoft.JSInterop;
 
 namespace Blazor.Ionic
 {
-    public abstract class BaseIonicPresentableComponent<TPresentedData, TDismissedData> : ComponentBase, IDisposable
+    public abstract class BaseIonicPresentableComponent<TPresentedData, TDismissedData> : ComponentBase,
+        IAsyncDisposable
     {
         [Inject] protected IJSRuntime JsRuntime { get; set; }
 
@@ -17,7 +18,7 @@ namespace Blazor.Ionic
             get => _visible;
             set
             {
-                if (_visible != value &&  _realVisible != value)
+                if (_visible != value && _realVisible != value)
                 {
                     _renderActions.Enqueue(async () =>
                     {
@@ -26,7 +27,9 @@ namespace Blazor.Ionic
                             Id = Guid.NewGuid().ToString();
                             await CreateElement();
                         }
-                        await JsRuntime.InvokeVoidAsync("IonicBridge.executeFunctionByName", Id, value ? "present" : "dismiss");
+
+                        await JsRuntime.InvokeVoidAsync("IonicBridge.executeFunctionByName", Id,
+                            value ? "present" : "dismiss");
                     });
                 }
 
@@ -60,7 +63,7 @@ namespace Blazor.Ionic
         {
             _realVisible = false;
             await Dismissed.InvokeAsync(data);
-            if(_realVisible != _visible)
+            if (_realVisible != _visible)
                 await VisibleChanged.InvokeAsync(_realVisible);
         }
 
@@ -68,7 +71,7 @@ namespace Blazor.Ionic
         {
             _realVisible = true;
             await Presented.InvokeAsync(data);
-            if(_realVisible != _visible)
+            if (_realVisible != _visible)
                 await VisibleChanged.InvokeAsync(_realVisible);
         }
 
@@ -89,10 +92,16 @@ namespace Blazor.Ionic
             await base.OnAfterRenderAsync(firstRender);
         }
 
-        public virtual void Dispose()
+        public virtual async ValueTask DisposeAsync()
         {
-            if(_realVisible || _visible)
-                JsRuntime.InvokeVoidAsync("IonicBridge.executeFunctionByName", Id, "dismiss");
+            if (_realVisible || _visible)
+            {
+                var tcs = new TaskCompletionSource<bool>();
+                Dismissed = new EventCallback<TDismissedData>(this, new Action(() => tcs.SetResult(true)));
+                await JsRuntime.InvokeVoidAsync("IonicBridge.executeFunctionByName", Id, "dismiss");
+                await tcs.Task;
+            }
+
             ThisRef?.Dispose();
         }
     }

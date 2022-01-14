@@ -26,14 +26,18 @@
     protected override void OnAfterRender(bool firstRender)
     {
         base.OnAfterRender(firstRender);
-        if(firstRender)
-            
-            StateService.StateChanged += StateHasChanged;
+        if (firstRender)
+            StateService.StateChanged += OnStateServiceOnStateChanged;
+    }
+
+    private void OnStateServiceOnStateChanged()
+    {
+        InvokeAsync(StateHasChanged);
     }
 
     public void Dispose()
     {
-        StateService.StateChanged -= StateHasChanged;
+        StateService.StateChanged -= OnStateServiceOnStateChanged;
     }
 
 }

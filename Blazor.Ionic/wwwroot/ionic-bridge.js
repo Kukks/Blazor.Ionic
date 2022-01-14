@@ -84,9 +84,15 @@ window.IonicBridge = {
     },
     removeremove: function (obj, parentElement) {
         if (obj) {
+            obj.removeOriginal = obj.remove;
             obj.remove = () => {
                 parentElement.appendChild(obj);
             };
+        }
+    },
+    removeremoveremove: function (obj) {
+        if (obj && obj.removeOriginal) {
+            obj.remove = obj.removeOriginal;
         }
     }
 }
